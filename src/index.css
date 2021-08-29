@@ -1,3 +1,7 @@
 *{
     margin: 0;
+    overflow: hidden;
+}
+.font-loader {
+    font-family: 'Nunito',sans-serif;  
 }

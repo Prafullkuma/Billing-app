@@ -1,10 +1,11 @@
 import React from 'react'
 import {Link, Route,Switch  } from 'react-router-dom'
-
 import { AppBar,Toolbar,Typography} from '@material-ui/core'
 
 
 import Home from './Home'
+import Register from './Register'
+import Login from './Login'
 
 
 const Navigation=()=>{
@@ -30,6 +31,8 @@ const Navigation=()=>{
             </AppBar>
             <Switch>
                 <Route path="/" component={Home} exact/>
+                <Route path="/register" component={Register} exact/>
+                <Route path="/login" component={Login} exact/>
             </Switch>
         </div>
     )
