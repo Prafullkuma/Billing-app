@@ -8,6 +8,8 @@ import Register from './Register'
 import Login from './Login'
 import DashBoard from './DashBoard'
 import Customers from './Customers'
+import Products from './Products'
+
 const Navigation=({handleLoginStatus,isLoggedIn})=>{
    
 
@@ -56,6 +58,7 @@ const Navigation=({handleLoginStatus,isLoggedIn})=>{
                      <Switch>
                         <Route path="/dashboard" component={DashBoard} exact/>
                         <Route path="/customers" component={Customers} exact/>
+                        <Route path="/products" component={Products} exact/>
                     </Switch>
                     :
                     <Switch>
