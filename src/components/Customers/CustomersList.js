@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import CustomersListItem from './CustomersListItem' 
+
 const CustomersList=()=>{
 
     const customers=useSelector((state)=>{
@@ -16,16 +17,23 @@ const CustomersList=()=>{
                      <h1>Add Your first customer</h1>
                  </div>
                  :
-                 <table>
+                 <table border="1">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th>Name</th>
+                            <th>Mobile</th>
+                            <th>Email</th>
+                            <th>Created Date</th>
+                            <th>Show</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                      </thead>
                      <tbody>
-
+                         {customers.map((ele)=>{
+                             return <CustomersListItem key={ele._id} {...ele}/>
+                         })} 
                      </tbody>
-
                  </table>
                      
             
