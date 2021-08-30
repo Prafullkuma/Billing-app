@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import CustomersForm from './CustomersForm'
+import Swal from 'sweetalert2'
+import {  Typography }from '@material-ui/core'
+
 import { addCustomerAction } from '../../actions/customersAction'
 import { useDispatch } from 'react-redux'
-import Swal from 'sweetalert2'
+
 
 const AddCustomers=()=>{
 
@@ -29,7 +32,8 @@ const AddCustomers=()=>{
 
     return(
         <div>
-            <h1>Add customers</h1>
+            <Typography variant="h4">Add Customer</Typography>
+            
             <CustomersForm formSubmission={formSubmission} resetFormHandle={resetFormHandle} isSaved={isSaved}/>
         </div>
     )

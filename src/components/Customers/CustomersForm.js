@@ -1,9 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import validator from 'validator'
+import {  TextField,Button }from '@material-ui/core'
+import { makeStyles } from "@material-ui/core/styles";
 
-const CustomerForm=({formSubmission,isSaved,resetFormHandle})=>{
+ const useStyles = makeStyles((theme) => ({
+        root: {
+        '& .MuiTextField-root': {
+            margin: theme.spacing(1),
+            width: '25ch',
+        },
+        },
+}));
+
+const CustomerForm=({formSubmission,isSaved,resetFormHandle,handleToggle})=>{
+    const classes = useStyles();
+
     const [name,setName]=useState('')
-    const [mobile,setMobile]=useState('')
+    const [mobile,setMobile]=useState( '')
     const [email,setEmail]=useState('')
     const [errorObj,setErrorObj]=useState({})
     
@@ -59,23 +72,28 @@ const CustomerForm=({formSubmission,isSaved,resetFormHandle})=>{
                     email:email.toLowerCase()
                 }
                 formSubmission(formData)
+               if(handleToggle){
+                   handleToggle()
+               }
         }else{
             setErrorObj(errors)
         }
     }
     return( 
         <div>
-              <form onSubmit={handleSubmit}>
-                  <input type="text" name="name" placeholder="Enter name" value={name} onChange={handleChange}/>
+              <form onSubmit={handleSubmit} lassName={classes.root}>
+                  <TextField type="text" label="Name" name="name" placeholder="Enter name" value={name} onChange={handleChange}/><br/>
                   <span>{errorObj.name && <span>{errorObj.name}</span>}</span>
-                  <br/><br/>
-                  <input type="text" name="mobile" placeholder="Enter mobile" value={mobile} onChange={handleChange}/>
+                  <br/>
+                  <TextField type="text" label="Mobile" name="mobile" placeholder="Enter mobile" value={mobile} onChange={handleChange}/>
+                  <br/>
                   <span>{errorObj.mobile && <span>{errorObj.mobile}</span>}</span>
-                  <br/><br/>
-                  <input type="text" name="email" placeholder="Enter email" value={email} onChange={handleChange}/>
+                  <br/>
+                  <TextField type="text" label="Email" name="email" placeholder="Enter email" value={email} onChange={handleChange}/>
+                  <br/>
                   <span>{errorObj.email && <span>{errorObj.email}</span>}</span>
-                  <br/><br/>
-                  <input type="submit" value="Add customer"/>
+                  <br/><br/><br/>
+                  <Button variant="contained" color="secondary" type="submit">Add customer</Button>
               </form>  
 
         </div>

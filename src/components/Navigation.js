@@ -8,7 +8,6 @@ import Register from './Register'
 import Login from './Login'
 import DashBoard from './DashBoard'
 import Customers from './Customers'
-
 const Navigation=({handleLoginStatus,isLoggedIn})=>{
    
 
@@ -57,11 +56,11 @@ const Navigation=({handleLoginStatus,isLoggedIn})=>{
                      <Switch>
                         <Route path="/dashboard" component={DashBoard} exact/>
                         <Route path="/customers" component={Customers} exact/>
-                     </Switch>
+                    </Switch>
                     :
                     <Switch>
                             <Route  path="/register" component={Register} exact/>
-                           <Route path="/login" render={(props)=><Login handleLoginStatus={handleLoginStatus} {...props}/>} exact/>    
+                            <Route path="/login" render={(props)=><Login handleLoginStatus={handleLoginStatus} {...props}/>} exact/>    
                     </Switch> 
                  }
                 
