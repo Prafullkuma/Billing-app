@@ -3,7 +3,7 @@ import axios from "axios"
 
 export  const ACCOUNT_INFO="ACCOUNT_INFO"
 
-export const registerAction=(formData,successMessage,setSavedDetails,movePageHandle)=>{
+export const registerAction=(formData,successMessage,setSavedDetails,moveLink)=>{
 
     return (dispatch)=>{
            axios.post(`http://dct-billing-app.herokuapp.com/api/users/register`,formData)
@@ -12,7 +12,7 @@ export const registerAction=(formData,successMessage,setSavedDetails,movePageHan
                if(result){
                   setSavedDetails()
                   successMessage()
-                  movePageHandle()
+                  moveLink.push('/login')
                }     
            })
            .catch((err)=>{
@@ -20,7 +20,7 @@ export const registerAction=(formData,successMessage,setSavedDetails,movePageHan
            })
     }
 }
-export const loginAction=(formData,moveLink,successMessage,errorMessage)=>{
+export const loginAction=(formData,moveLink,successMessage,errorMessage,handleLoginStatus)=>{
    
     return (dispatch)=>{
         axios.post(`http://dct-billing-app.herokuapp.com/api/users/login`,formData)
@@ -33,6 +33,7 @@ export const loginAction=(formData,moveLink,successMessage,errorMessage)=>{
                 localStorage.setItem('token',`Bearer ${result.token}`)
                 successMessage()
                 moveLink.push('/')
+                handleLoginStatus()
             }
         })
         .catch((err)=>{

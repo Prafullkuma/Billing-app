@@ -37,7 +37,7 @@ const LoginUser=({formSubmission })=>{
          if(Object.keys(errors).length===0){
             setErrorObj({})
             const formData={
-                email:email,
+                email:email.toLowerCase(),
                 password:password
             }
             formSubmission(formData)

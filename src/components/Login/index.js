@@ -7,7 +7,7 @@ import { loginAction } from '../../actions/userAction'
 import { useDispatch } from 'react-redux'
 
 const Login=(props)=>{
-
+    const { handleLoginStatus }=props
     const dispatch=useDispatch()
 
     const formSubmission=(formData)=>{
@@ -23,7 +23,7 @@ const Login=(props)=>{
                 text:error.errors
             })
         }
-        dispatch(loginAction(formData, props.history ,successMessage,errorMessage))
+        dispatch(loginAction(formData, props.history ,successMessage,errorMessage,handleLoginStatus))
     }
 
     return(

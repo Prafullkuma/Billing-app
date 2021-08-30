@@ -77,7 +77,7 @@ const AddUser=({formSubmission,handleIsSaved,isSaved})=>{
                setErrorObj({})
                const formData={
                     username:username,
-                    email:email,
+                    email:email.toLowerCase(),
                     password:password,
                     businessName:businessName,
                     address:address

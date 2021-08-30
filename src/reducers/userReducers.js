@@ -1,4 +1,5 @@
 import {ACCOUNT_INFO}  from '../actions/userAction'
+
 const initailStateValue=[]
 
 const userReducers=(state=initailStateValue,action)=>{

@@ -1,21 +1,31 @@
-import React,{useEffect} from 'react'
+import React,{useEffect, useState} from 'react'
 import Navigation from './components/Navigation'
 import WebFont from 'webfontloader';
 
 
 const App=()=>{
+    const [isLoggedIn,setIsLoggedIn]=useState(false)
+    useEffect(() => {
+        WebFont.load({
+                google: {
+                    families: ['Nunito','sans-serif']
+                }
+        });
+    }, []); 
+    
+    useEffect(()=>{
+        if(localStorage.getItem('token')){
+            setIsLoggedIn(!isLoggedIn)
+        }
+    },[])
 
-        useEffect(() => {
-            WebFont.load({
-            google: {
-                families: ['Nunito','sans-serif']
-            }
-            });
-        }, []); 
+    const handleLoginStatus=()=>{
+        setIsLoggedIn(!isLoggedIn)
+    }
 
     return(
         <div>
-            <Navigation/>
+            <Navigation isLoggedIn={isLoggedIn} handleLoginStatus={handleLoginStatus}/>
         </div>
     )
 }

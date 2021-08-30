@@ -18,11 +18,8 @@ const Register=(props)=>{
         const setSavedDetails=()=>{
             setIsSaved(true)
         }
-        const movePageHandle=()=>{
-            props.history.push('/login')
-        }
         
-        dispatch(registerAction(formData,successMessage,setSavedDetails,movePageHandle))  
+        dispatch(registerAction(formData,successMessage,setSavedDetails,props.history))  
     }
     const handleIsSaved=()=>{
         setIsSaved(!isSaved)
