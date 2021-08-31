@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { TableContainer,Table,TextField,TableCell,TableHead,Paper,TableRow,TableBody } from '@material-ui/core'
+import { TableContainer,Table,TableCell,TableHead,Paper,TableRow,TableBody } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import TablePagination from "@material-ui/core/TablePagination";
 
@@ -14,8 +14,9 @@ const useStyles = makeStyles({
   });
   
 const ProductsList=()=>{
-     const [search,setSearch]=useState('')
-     const [page, setPage] = useState(1);
+
+     const [page, setPage] = useState(0);
+
      const [rowsPerPage, setRowsPerPage] = useState(5);
    
      const classes = useStyles();
@@ -39,6 +40,7 @@ const ProductsList=()=>{
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+   
 
     
     return(
@@ -50,16 +52,6 @@ const ProductsList=()=>{
                 </div>
                 :
                 <div style={{margin:'30px'}}>
-
-                    <TextField
-                        value={search}
-                        onChange={(e)=>setSearch(e.target.value)}
-                        label="Search"
-                        color="secondary"
-                        placeholder="Enter text to search"
-                    />
-                    
-                    <br/><br/>
                     <TableContainer component={Paper} item xs={9} >
                     <Table className={classes.table} >
                             <TableHead>
@@ -72,8 +64,8 @@ const ProductsList=()=>{
                                     </TableRow>
                             </TableHead>
                             <TableBody>
-                                {products.
-                                    slice(page * rowsPerPage,page* rowsPerPage +rowsPerPage )
+                                {products
+                                    .slice(page * rowsPerPage,page* rowsPerPage +rowsPerPage )
                                     .map((ele,i)=>{
 
                                     return <ProductsListItems key={ele._id} {...ele} srNo={i+1} />
@@ -82,7 +74,7 @@ const ProductsList=()=>{
                         </Table>
 
                         <TablePagination
-                           rowsPerPageOptions={[5, 10, 25]}
+                            rowsPerPageOptions={[5, 10, 25]}
                             component="div"
                             count={products.length}
                             page={page}

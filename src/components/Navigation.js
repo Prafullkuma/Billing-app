@@ -1,7 +1,15 @@
-import React from 'react'
-import {Link, Route,Switch  } from 'react-router-dom'
-import { AppBar,Toolbar,Typography} from '@material-ui/core'
+import React,{ useState,useEffect} from 'react'
 
+import {Link, Route,Switch,withRouter  } from 'react-router-dom'
+import { AppBar,Toolbar,Typography, Button} from '@material-ui/core'
+
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
+import { accoutAction } from '../actions/userAction'
+
+
+import { useDispatch ,useSelector} from 'react-redux'
 
 import Home from './Home'
 import Register from './Register'
@@ -10,14 +18,37 @@ import DashBoard from './DashBoard'
 import Customers from './Customers'
 import Products from './Products'
 
-const Navigation=({handleLoginStatus,isLoggedIn})=>{
-   
+
+const Navigation=(props)=>{
+    const {handleLoginStatus,isLoggedIn}=props
+    const [anchorEl, setAnchorEl] = useState(null);
+    const dispatch=useDispatch()
 
     const LinkStyle={
         color:'white',
         margin:'12px',
         textDecoration:'none',
     }
+      //for Profile
+      const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
+
+      const handleClose = () => {
+        setAnchorEl(null);
+      };
+
+      //Profile
+
+      useEffect(()=>{
+          if(localStorage.getItem('token')){
+            dispatch(accoutAction())
+          }
+      },[dispatch])
+      
+      const user=useSelector((state)=>{
+        return state.user
+      })
 
     return(
         <div>
@@ -34,10 +65,12 @@ const Navigation=({handleLoginStatus,isLoggedIn})=>{
                                 <Link style={LinkStyle} to="/customers">Customers</Link>
                                 <Link style={LinkStyle} to="/products">Products</Link>
                                 <Link style={LinkStyle} to="/bills">Bills</Link>
-                                <Link style={LinkStyle} to="/profile">Profile</Link>
-                                
+                                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                                    Profile
+                                </Button>   
                                 <Link style={LinkStyle} onClick={()=>{
                                     localStorage.removeItem('token')
+                                    props.history.push('/')
                                     handleLoginStatus()
                                 }}to="#">Logout</Link>
                             </>
@@ -49,7 +82,20 @@ const Navigation=({handleLoginStatus,isLoggedIn})=>{
                             </>
                         }
                     </Typography>
-                </Toolbar>
+                </Toolbar>            
+                
+                   <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                     >
+                    <MenuItem >{user && user.username}</MenuItem>
+                    <MenuItem >{user && user.email}</MenuItem>
+                    <MenuItem >{user && user.businessName}</MenuItem>
+                    <MenuItem>{user && user.address}</MenuItem>
+                    </Menu> 
             </AppBar>
             <Switch>
                 <Route path="/" component={Home} exact/>
@@ -59,6 +105,7 @@ const Navigation=({handleLoginStatus,isLoggedIn})=>{
                         <Route path="/dashboard" component={DashBoard} exact/>
                         <Route path="/customers" component={Customers} exact/>
                         <Route path="/products" component={Products} exact/>
+                        {/* <Route path="/profile" component={Profile} exact/> */}
                     </Switch>
                     :
                     <Switch>
@@ -71,4 +118,4 @@ const Navigation=({handleLoginStatus,isLoggedIn})=>{
         </div>
     )
 }
-export default Navigation
+export default withRouter(Navigation) 

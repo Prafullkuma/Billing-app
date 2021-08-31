@@ -46,7 +46,7 @@ export const accoutAction=()=>{
 
     return (dispatch)=>{
 
-        axios.get(`http://dct-billing-app.herokuapp.com/api/users/login`,{
+        axios.get(`http://dct-billing-app.herokuapp.com/api/users/account`,{
             headers:{
                  'Authorization':localStorage.getItem('token')
                }
