@@ -35,7 +35,7 @@ const CustomersList=()=>{
     return(
         <div>
             <Typography variant="h4" className={classes.title}>
-                     Customer-{customers.length}
+                     customer items-{customers.length}
             </Typography>
 
             {

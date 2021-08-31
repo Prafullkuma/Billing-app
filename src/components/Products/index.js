@@ -4,6 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 
 
 import AddProducts from './AddProducts'
+import ProductsList from './ProductsList'
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -18,14 +20,20 @@ const Products=()=>{
     const classes = useStyles();
     return(
         <div>
-            <Grid container spacing={6}>
+            <Grid container spacing={0}>
                 <Grid item xs={12}>
                     <Paper className={classes.paper}>
                             <Typography variant="h4">Products</Typography>
                     </Paper>
                 </Grid>
+                <Grid item xs={10}>
+                      <Paper className={classes.paper}>
+                         <ProductsList/>
+                    </Paper>
+                </Grid>
+                <AddProducts/>
             </Grid>
-            <AddProducts/>
+
         </div>
     )
 }

@@ -1,6 +1,8 @@
 import React,{useState} from 'react'
 import { useDispatch } from 'react-redux'
-import ProdcutsForm from './ProductsForm'
+
+
+import ProductsForm from './ProductsForm'
 import {addProductsAction} from '../../actions/productsAction'
 import Swal from 'sweetalert2'
 
@@ -26,8 +28,8 @@ const AddProducts=()=>{
     
     return(
         <div>
-            <h1>Add Product</h1>
-            <ProdcutsForm formSubmission={formSubmission} toggleStatus={toggleStatus} isSaved={isSaved} />
+            
+            <ProductsForm formSubmission={formSubmission} toggleStatus={toggleStatus} isSaved={isSaved} />
         </div>
     )
 }

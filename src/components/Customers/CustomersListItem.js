@@ -141,6 +141,7 @@ const CustomersListItem=({_id , name:Ename,mobile:Emobile,email:Eemail,createdAt
                             </IconButton>
                   </ListItemSecondaryAction>
             </ListItem>
+            <hr style={{margin:'10px'}}/>
             <Dialog
                 open={open}
                 onClose={handleClose}

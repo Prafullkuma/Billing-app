@@ -81,7 +81,7 @@ const CustomerForm=({formSubmission,isSaved,resetFormHandle,handleToggle})=>{
     }
     return( 
         <div>
-              <form onSubmit={handleSubmit} lassName={classes.root}>
+              <form onSubmit={handleSubmit} className={classes.root}>
                   <TextField type="text" label="Name" name="name" placeholder="Enter name" value={name} onChange={handleChange}/><br/>
                   <span>{errorObj.name && <span>{errorObj.name}</span>}</span>
                   <br/>

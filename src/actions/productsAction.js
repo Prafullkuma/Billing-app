@@ -1,5 +1,8 @@
 import axios from 'axios'
 export const ADD_PRODUCT="ADD_PRODUCT"
+export const ALL_PRODUCTS="ALL_PRODUCTS"
+export const DELETE_PRODUCT="DELETE_PRODUCT"
+export const EDIT_PRODUCT="EDIT_PRODUCT"
 
 export const addProductsAction=(formData,successMessage,setResetFormHandle)=>{
 
@@ -21,4 +24,61 @@ export const addProductsAction=(formData,successMessage,setResetFormHandle)=>{
             alert(err.message)
         })
     }
+}
+export const getAllProducts=()=>{
+     return (dispatch)=>{
+        axios.get(`http://dct-billing-app.herokuapp.com/api/products`,{
+            headers:{
+                'Authorization':localStorage.getItem('token') 
+            }
+        })
+        .then((res)=>{
+            const result=res.data
+            if(result){
+                dispatch({type:ALL_PRODUCTS,payload:result})    
+             }
+          })
+        .catch((err)=>{
+            alert(err.message)
+        })
+     }
+}
+
+export const deleteProductAction=(_id)=>{
+    return (dispatch)=>{
+         axios.delete(`http://dct-billing-app.herokuapp.com/api/products/${_id}`,{
+             headers:{
+                'Authorization':localStorage.getItem('token') 
+             }
+         })
+         .then((res)=>{
+            const result=res.data
+            
+            if(result){
+                dispatch({type:DELETE_PRODUCT,payload:result})
+            }
+         })
+         .catch((err)=>{
+             alert(err.message)
+         })
+    }
+}
+export const editProductAction=(formData,_id)=>{
+     return (dispatch)=>{
+         axios.put(`http://dct-billing-app.herokuapp.com/api/products/${_id}`,formData,{
+             headers:{ 
+                'Authorization':localStorage.getItem('token') 
+             }
+         })  
+         .then((res)=>{
+              const result=res.data
+              console.log(result)
+             if(result){
+                 dispatch({type:EDIT_PRODUCT,payload:{result:result,_id:_id}})
+             }
+         }) 
+         .catch((err)=>{
+             alert(err.message)
+         })
+     }
 }
