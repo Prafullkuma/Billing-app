@@ -74,7 +74,7 @@ const ProductsListItems=({name:Ename,price:Eprice, _id,srNo})=>{
     return(
         <>
         <TableRow >
-            <TableCell component="th" scope="row">{srNo}</TableCell>
+            <TableCell  scope="row">{srNo}</TableCell>
             <TableCell>{Ename}</TableCell>
             <TableCell>{Eprice}</TableCell>
             <TableCell>
@@ -88,6 +88,9 @@ const ProductsListItems=({name:Ename,price:Eprice, _id,srNo})=>{
                      </IconButton>      
             </TableCell>
         </TableRow>
+
+
+
 
 
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -114,6 +117,7 @@ const ProductsListItems=({name:Ename,price:Eprice, _id,srNo})=>{
                 </DialogContent>
             
         </Dialog>
+
         </>
     )
 }

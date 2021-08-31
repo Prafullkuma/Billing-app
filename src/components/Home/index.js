@@ -4,7 +4,7 @@ import './style.css'
 const Home=(props)=>{
 
     return(
-        <div>
+        <div id="banner">
             <Banner/>
         </div>
     )

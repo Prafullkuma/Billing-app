@@ -31,7 +31,12 @@ const Products=()=>{
                          <ProductsList/>
                     </Paper>
                 </Grid>
-                <AddProducts/>
+
+                <Grid item xs={2}>
+                      <Paper className={classes.paper}> 
+                        <AddProducts/>
+                    </Paper>
+                </Grid>
             </Grid>
 
         </div>

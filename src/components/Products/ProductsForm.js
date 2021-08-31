@@ -68,9 +68,9 @@ const ProdcutsForm=({formSubmission,toggleStatus,isSaved})=>{
 
 
     return(
-        <div>
+        <div style={{margin:'30px'}}>
              <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                    Add Prodcut
+                    Add Product
              </Button>
              <Dialog  open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                     <DialogContentText style={{marginTop:'30px'}}>
@@ -91,7 +91,7 @@ const ProdcutsForm=({formSubmission,toggleStatus,isSaved})=>{
                             Cancel
                         </Button>
 
-                        <Button variant="contained" color="secondary"  type="submit">Add Product</Button>
+                        <Button variant="contained" onClick={handleClose} color="secondary"  type="submit">Add Product</Button>
                     </DialogActions>
                     </form>
             </Dialog>

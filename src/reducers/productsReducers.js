@@ -5,7 +5,7 @@ const productsReducers=(state=initailStateValue,action)=>{
    
          switch(action.type){
             case ADD_PRODUCT:{
-                return [...state,action.payload]
+                return [action.payload,...state]
             }
             case ALL_PRODUCTS:{
                 return action.payload
