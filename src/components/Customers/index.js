@@ -24,12 +24,12 @@ const Customers=()=>{
                              <Typography variant="h4">Customer</Typography>
                     </Paper>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={8}>
                       <Paper className={classes.paper}>
                       <CustomersList/>
                       </Paper>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={3}>
                     <Paper className={classes.paper}>
                            <AddCustomer/>
                     </Paper>

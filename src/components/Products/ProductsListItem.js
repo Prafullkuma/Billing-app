@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ProductsListItems=({name:Ename,price:Eprice, _id,srNo})=>{
+const ProductsListItems=({name:Ename,price:Eprice, _id,srNo,deleteData,changed,handleStateChange,editData})=>{
 
     const [open, setOpen] = useState(false);
 
@@ -33,8 +33,15 @@ const ProductsListItems=({name:Ename,price:Eprice, _id,srNo})=>{
 
     const deleteHandle=(_id)=>{
         const sure=window.confirm("Are you sure")
-        if(sure){
-            dispatch(deleteProductAction(_id))
+
+        if(changed){    
+            if(sure) {
+                deleteData(_id)
+            }          
+        }else{
+            if(sure){
+                dispatch(deleteProductAction(_id))
+            }
         }
     }
     const handleClickOpen = () => {
@@ -64,7 +71,12 @@ const ProductsListItems=({name:Ename,price:Eprice, _id,srNo})=>{
                     name:name,
                     price:Number(price)
                 }
-            dispatch(editProductAction(formData,_id))
+                if(changed){
+                    editData(formData,_id)
+                    handleStateChange()
+                }else{    
+                   dispatch(editProductAction(formData,_id))
+                }
          }
          else{
             setErrorObj(errors)
@@ -78,19 +90,16 @@ const ProductsListItems=({name:Ename,price:Eprice, _id,srNo})=>{
             <TableCell>{Ename}</TableCell>
             <TableCell>{Eprice}</TableCell>
             <TableCell>
-                    <IconButton edge="end" aria-label="delete">
-                        <EditIcon  onClick={handleClickOpen} />
+                    <IconButton  onClick={handleClickOpen} edge="end" aria-label="delete">
+                        <EditIcon  />
                     </IconButton>
             </TableCell>
             <TableCell>
-                     <IconButton edge="end" aria-label="delete">
-                         <DeleteIcon onClick={()=>deleteHandle(_id)}/>
+                     <IconButton onClick={()=>deleteHandle(_id)} edge="end" aria-label="delete">
+                         <DeleteIcon />
                      </IconButton>      
             </TableCell>
         </TableRow>
-
-
-
 
 
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">

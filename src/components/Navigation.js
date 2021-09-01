@@ -17,7 +17,7 @@ import Login from './Login'
 import DashBoard from './DashBoard'
 import Customers from './Customers'
 import Products from './Products'
-
+import Bills from './Bills'
 
 const Navigation=(props)=>{
     const {handleLoginStatus,isLoggedIn}=props
@@ -95,16 +95,18 @@ const Navigation=(props)=>{
                     <MenuItem >{user && user.email}</MenuItem>
                     <MenuItem >{user && user.businessName}</MenuItem>
                     <MenuItem>{user && user.address}</MenuItem>
+                    
                     </Menu> 
             </AppBar>
             <Switch>
-                <Route path="/" component={Home} exact/>
+                {/* <Route path="/" component={Home} exact/> */}
                 {
                     isLoggedIn ?
                      <Switch>
                         <Route path="/dashboard" component={DashBoard} exact/>
                         <Route path="/customers" component={Customers} exact/>
                         <Route path="/products" component={Products} exact/>
+                        <Route path="/bills" component={Bills} exact/>
                         {/* <Route path="/profile" component={Profile} exact/> */}
                     </Switch>
                     :

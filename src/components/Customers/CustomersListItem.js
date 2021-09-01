@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useSelector,useDispatch } from 'react-redux'
 import validator from 'validator'
 
-import { ListItem, Paper,DialogTitle,ListItemText,DialogActions,Button,ListItemSecondaryAction,IconButton,Dialog,TextField} from '@material-ui/core'
+import { Paper,TableRow,DialogTitle,DialogActions,Button,IconButton,Dialog,TextField,TableCell} from '@material-ui/core'
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const CustomersListItem=({_id , name:Ename,mobile:Emobile,email:Eemail,createdAt})=>{
+const CustomersListItem=({_id ,srNo,editItem,deleteItem, name:Ename,mobile:Emobile,email:Eemail,createdAt,changed,handleSearchStatusChanged})=>{
     
     const [open,setOpen]=useState(false)
 
@@ -66,9 +66,16 @@ const CustomersListItem=({_id , name:Ename,mobile:Emobile,email:Eemail,createdAt
     // delete Handle
     const deleteHandle=(_id)=>{
         const sure=window.confirm("Are you sure")
-        if(sure){
-            dispatch(deleteCustomerAction(_id))
+        if(changed){    
+            if(sure) {
+                deleteItem(_id)
+            }          
+        }else{
+            if(sure){
+                    dispatch(deleteCustomerAction(_id))
+            }
         }
+    
     }    
 
      const handleOpen=()=>{
@@ -116,32 +123,45 @@ const CustomersListItem=({_id , name:Ename,mobile:Emobile,email:Eemail,createdAt
                 mobile:mobile,
                 email:email
             }
-            dispatch(editCustomerAction(formData,_id))
+            if(changed){
+                editItem(formData,_id)
+                handleSearchStatusChanged()
+                
+            }else{
+                dispatch(editCustomerAction(formData,_id))
+            }
+            
         }else{
             setErrorObj(errors)
         }
     }
     return(
-        <div>
-             <ListItem>
-                    <ListItemText
-                            primary={`${Ename} - ${Emobile} - ${Eemail}`}
-                    />
-                    <ListItemSecondaryAction>
- 
-                            <IconButton edge="end" aria-label="view">
-                                        <EditIcon title="Edit" onClick={handleOpen}/>
+        <>
+             <TableRow >
+             <TableCell scope="row">{srNo}</TableCell>
+
+             <TableCell>{Ename}</TableCell>
+             <TableCell>{Eemail}</TableCell>
+
+             <TableCell>{Emobile}</TableCell>
+             <TableCell>
+                         <IconButton edge="end"  onClick={handleOpen} aria-label="view">
+                                        <EditIcon title="Edit" />
                             </IconButton>                       
+               
+             </TableCell>
+                  <TableCell>
+                            <IconButton edge="end"  onClick={()=>deleteHandle(_id)} aria-label="delete">
+                                    <DeleteIcon title="Delete" />
+                            </IconButton>
+                 </TableCell>
+                      <TableCell>
+                            <IconButton edge="end"onClick={()=>handleView(_id)}  aria-label="view">
+                                    <ViewListIcon  title="View" />
+                            </IconButton>
+                       </TableCell>
                         
-                            <IconButton edge="end" aria-label="delete">
-                                    <DeleteIcon title="Delete" onClick={()=>deleteHandle(_id)}/>
-                            </IconButton>
-                            <IconButton edge="end" aria-label="view">
-                                    <ViewListIcon  title="View" onClick={()=>handleView(_id)}/>
-                            </IconButton>
-                  </ListItemSecondaryAction>
-            </ListItem>
-            <hr style={{margin:'10px'}}/>
+            </TableRow>
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -175,9 +195,8 @@ const CustomersListItem=({_id , name:Ename,mobile:Emobile,email:Eemail,createdAt
                             </Button>
                         </DialogActions>
                     </form>     
-
             </Dialog>
-        </div>
+        </>
     )
 }
 export default CustomersListItem
