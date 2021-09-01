@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const CustomersListItem=({_id ,srNo,editItem,deleteItem, name:Ename,mobile:Emobile,email:Eemail,createdAt,changed,handleSearchStatusChanged})=>{
+const CustomersListItem=({_id ,srNo,name:Ename,mobile:Emobile,email:Eemail,createdAt})=>{
     
     const [open,setOpen]=useState(false)
 
@@ -66,24 +66,17 @@ const CustomersListItem=({_id ,srNo,editItem,deleteItem, name:Ename,mobile:Emobi
     // delete Handle
     const deleteHandle=(_id)=>{
         const sure=window.confirm("Are you sure")
-        if(changed){    
-            if(sure) {
-                deleteItem(_id)
-            }          
-        }else{
             if(sure){
                     dispatch(deleteCustomerAction(_id))
             }
-        }
-    
-    }    
+       }    
 
      const handleOpen=()=>{
         setOpen(true);
      }      
      const handleClose = () => {
         setOpen(false);
-      };
+     };
       const handleChange=(e)=>{
         const attr=e.target.name
         if(attr==="name"){
@@ -123,14 +116,7 @@ const CustomersListItem=({_id ,srNo,editItem,deleteItem, name:Ename,mobile:Emobi
                 mobile:mobile,
                 email:email
             }
-            if(changed){
-                editItem(formData,_id)
-                handleSearchStatusChanged()
-                
-            }else{
                 dispatch(editCustomerAction(formData,_id))
-            }
-            
         }else{
             setErrorObj(errors)
         }

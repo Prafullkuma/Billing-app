@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {TextField ,TablePagination,TableContainer,Table,TableRow,TableBody,Box, TableCell, TableHead}  from '@material-ui/core'
 
 import CustomersListItem from './CustomersListItem' 
-import {allCustomerListAction,deleteCustomerAction,editCustomerAction} from '../../actions/customersAction'
+import {allCustomerListAction} from '../../actions/customersAction'
 
 const useStyles = makeStyles({
     table: {
@@ -14,14 +14,10 @@ const useStyles = makeStyles({
   
 const CustomersList=()=>{
 
-    const [order,setOrder]=useState('')
-    
-    const [data,setData]=useState([])
+    const [order,setOrder]=useState('')    
     const [search,setSearch]=useState('')
-
-    const [changed,setChanged]=useState(false)
-
     const [page, setPage] = useState(0);
+    const [data,setData]=useState([])
 
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -35,6 +31,9 @@ const CustomersList=()=>{
     const customers=useSelector((state)=>{
         return state.customers
     })
+     useEffect(()=>{
+         setData([...customers])
+     },[customers])
     //Sorting ASC or DESC
 
     const handleSelectChange=(e)=>{
@@ -68,43 +67,12 @@ const CustomersList=()=>{
     const handleSeachChange=(e)=>{
         const res=e.target.value
         setSearch(res)
+
         const result= customers.filter((ele)=>{
             return ele.name.toLowerCase().includes(res.toLowerCase())
         })
-        if(result.length !==0){
-            setData(result)
-            setChanged(true)
-        }else{
-            setChanged(false)
-        }
-    }   
-
-    const handleSearchStatusChanged=()=>{
-        setChanged(!changed)
-    }
-    //Edit 
-
-    const editItem=(formData,_id)=>{
-
-        const result=customers.map((ele)=>{
-            if(ele._id===_id){
-                 return {...ele,...formData}
-            }else{
-                return {...ele}
-            }   
-        })
-       setData(result)
-       dispatch(editCustomerAction(formData,_id))
-    }
-
-    //delete 
-    const deleteItem=(_id)=>{
-        const result=data.filter((ele)=>{
-            return ele._id !==_id
-        })
         setData(result)
-        dispatch(deleteCustomerAction(_id))
-    }
+    }   
 
     //Pagination
      
@@ -118,7 +86,7 @@ const CustomersList=()=>{
     
     return(
         <div> 
-            <h3>Total Customer-{customers.length}</h3>
+            <h3>Total Customer-{data.length}</h3>
             <select style={{margin:'20px'}} value={order} onChange={handleSelectChange}>
                 <option value="">Select Option</option>
                 <option value="asc">Order ASC</option>
@@ -149,18 +117,15 @@ const CustomersList=()=>{
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                            {
-                                data.length !==0 ?
-                                data
-                                .slice(page * rowsPerPage,page* rowsPerPage +rowsPerPage )
-                                .map((ele,i)=>{
-                                    return <CustomersListItem key={ele._id} editItem={editItem} changed={changed} handleSearchStatusChanged={handleSearchStatusChanged} deleteItem={deleteItem} {...ele} srNo={i+1}/> 
-                                })
-                                :customers
-                                .slice(page * rowsPerPage,page* rowsPerPage +rowsPerPage )
-                                .map((ele,i)=>{
-                                return <CustomersListItem key={ele._id} {...ele} srNo={i+1}/>
-                                })
+                            {   data.length===0
+                                    ?
+                                      <h1> No Customer Found</h1>
+                                    :
+                                        data
+                                        .slice(page * rowsPerPage,page* rowsPerPage +rowsPerPage )
+                                        .map((ele,i)=>{
+                                        return <CustomersListItem key={ele._id} {...ele} srNo={i+1}/>
+                                        })
                             }
                         </TableBody>
                         </Table>
@@ -168,7 +133,7 @@ const CustomersList=()=>{
                             <TablePagination
                                 rowsPerPageOptions={[5, 10, 25]}
                                 component="div"
-                                count={customers.length}
+                                count={data.length}
                                 page={page}
                                 onPageChange={handleChangePage}
                                 rowsPerPage={rowsPerPage}

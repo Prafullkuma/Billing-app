@@ -18,7 +18,7 @@ const Customers=()=>{
     const classes = useStyles();
     return(
         <div>
-            <Grid container spacing={6}>
+            <Grid container >
                 <Grid item xs={12}>
                     <Paper className={classes.paper}>
                              <Typography variant="h4">Customer</Typography>
@@ -29,7 +29,7 @@ const Customers=()=>{
                       <CustomersList/>
                       </Paper>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={3} spacing={2}>
                     <Paper className={classes.paper}>
                            <AddCustomer/>
                     </Paper>

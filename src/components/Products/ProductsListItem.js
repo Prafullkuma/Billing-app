@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ProductsListItems=({name:Ename,price:Eprice, _id,srNo,deleteData,changed,handleStateChange,editData})=>{
+const ProductsListItems=({name:Ename,price:Eprice, _id,srNo})=>{
 
     const [open, setOpen] = useState(false);
 
@@ -33,16 +33,9 @@ const ProductsListItems=({name:Ename,price:Eprice, _id,srNo,deleteData,changed,h
 
     const deleteHandle=(_id)=>{
         const sure=window.confirm("Are you sure")
-
-        if(changed){    
-            if(sure) {
-                deleteData(_id)
-            }          
-        }else{
             if(sure){
                 dispatch(deleteProductAction(_id))
             }
-        }
     }
     const handleClickOpen = () => {
       setOpen(true);
@@ -64,19 +57,13 @@ const ProductsListItems=({name:Ename,price:Eprice, _id,srNo,deleteData,changed,h
     const handleSubmit=(e)=>{
         e.preventDefault()
          runValidatior()
-
          if(Object.keys(errors).length===0){
              setErrorObj({})
                 const formData={
                     name:name,
                     price:Number(price)
-                }
-                if(changed){
-                    editData(formData,_id)
-                    handleStateChange()
-                }else{    
-                   dispatch(editProductAction(formData,_id))
-                }
+                }    
+            dispatch(editProductAction(formData,_id))  
          }
          else{
             setErrorObj(errors)
