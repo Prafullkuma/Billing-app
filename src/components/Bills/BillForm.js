@@ -4,7 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 const BillForm=({customers,products,formSubmission})=>{
   
     const [myDate,setMyDate]=useState('')
-    const [inputList, setInputList] = useState([{ _id:uuidv4(),product: "", quantity: "" }])
+    const [inputList, setInputList] = useState([{ id:uuidv4(),product: "", quantity: "" }])
+
     const [selectCustomer,setSelectCustomer]=useState('')
     
     const [errorObj,setErrorObj]=useState({})
@@ -13,10 +14,9 @@ const BillForm=({customers,products,formSubmission})=>{
 
         const handleSelectChange=(e)=>{
             const result=e.target.value
-            setSelectCustomer(result)
-            console.log(result)
+            setSelectCustomer(result)          
         }
-
+        
         const handleDateChange=(e)=>{
             const result=e.target.value
             setMyDate(result)
@@ -37,7 +37,7 @@ const BillForm=({customers,products,formSubmission})=>{
          setInputList(list)
        }
        const handleAddClick=()=>{
-            setInputList([...inputList,{_id:uuidv4(),product:"",quantity:""}])
+            setInputList([...inputList,{id:uuidv4(),product:"",quantity:""}])
        }
        
        //validation
@@ -49,7 +49,15 @@ const BillForm=({customers,products,formSubmission})=>{
          if(selectCustomer.length===0){
              errors.selectCustomer="Your not selected User"
          }
-         
+         if(inputList[0].product.length===0){
+             errors.product="Product is not selected"
+         }
+         if(inputList[0].quantity.length===0){
+             errors.quantity="Quantity can't be empty"
+         }
+         if(Number(inputList[0].quantity)==="0"){
+            errors.quantity="Quantity can't be 0"
+         }
        }
 
        const handleSubmit=(e)=>{
@@ -62,7 +70,7 @@ const BillForm=({customers,products,formSubmission})=>{
                     user:selectCustomer,
                     lineItems:inputList
                 }
-                console.log(formData)
+                formSubmission(formData)
             }else{
                 setErrorObj(errors)
             }
@@ -125,7 +133,6 @@ const BillForm=({customers,products,formSubmission})=>{
                        </div>
                    ) 
                 })}
- <div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div>
                 <input type="submit" value="Add Bill"/>  
             </form>
         </div>

@@ -3,13 +3,19 @@ import axios from "axios"
 
 export  const ACCOUNT_INFO="ACCOUNT_INFO"
 
-export const registerAction=(formData,successMessage,setSavedDetails,moveLink)=>{
+export const registerAction=(formData,successMessage,setSavedDetails,moveLink,errorMessage)=>{
 
     return (dispatch)=>{
            axios.post(`http://dct-billing-app.herokuapp.com/api/users/register`,formData)
            .then((res)=>{
                const result=res.data
-               if(result){
+
+               console.log("data error i got",result)
+
+               if(result.message){
+                     errorMessage(result.message)
+               }
+               else{
                   setSavedDetails()
                   successMessage()
                   moveLink.push('/login')
@@ -26,6 +32,8 @@ export const loginAction=(formData,moveLink,successMessage,errorMessage,handleLo
         axios.post(`http://dct-billing-app.herokuapp.com/api/users/login`,formData)
         .then((res)=>{
             const result=res.data
+            
+
             if(result.errors){
                 errorMessage(result)
             }

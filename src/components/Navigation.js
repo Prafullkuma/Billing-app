@@ -103,9 +103,9 @@ const Navigation=(props)=>{
                 {
                     isLoggedIn ?
                      <Switch>
-                        <Route path="/dashboard" component={DashBoard} exact/>
+                        {/* <Route path="/dashboard" component={DashBoard} exact/>
                         <Route path="/customers" component={Customers} exact/>
-                        <Route path="/products" component={Products} exact/>
+                        <Route path="/products" component={Products} exact/> */}
                         <Route path="/bills" component={Bills} exact/>
                         {/* <Route path="/profile" component={Profile} exact/> */}
                     </Switch>

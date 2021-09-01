@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import {allCustomerListAction} from '../../actions/customersAction'
 import {getAllProducts}  from '../../actions/productsAction'
 import AddBill from './AddBill'
+import BillsList from './BillsList'
+
+import {Grid,Paper} from '@material-ui/core'
 
 const Bills =()=>{
     
@@ -18,14 +21,21 @@ const Bills =()=>{
 
 
     return(
-        <div>
-            <h1>{customers.length}
-                              and 
-                {products.length}
-            </h1>
-            <AddBill customers ={customers}
-                     products={products}
-            />
+        <div>  
+            <Grid container spacing={3}>
+            <Grid item xs={12} sm={8}>
+                 <BillsList/>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+                <Paper style={{textAlign:"center"}} >
+                    <AddBill customers ={customers}
+                            products={products}
+                    />
+                </Paper>
+            </Grid>
+
+            </Grid>
+
         </div>
     )
 }
