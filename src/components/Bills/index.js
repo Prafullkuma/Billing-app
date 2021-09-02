@@ -5,7 +5,7 @@ import {getAllProducts}  from '../../actions/productsAction'
 import AddBill from './AddBill'
 import BillsList from './BillsList'
 
-import {Grid,Paper} from '@material-ui/core'
+import {Grid,Box} from '@material-ui/core'
 
 const Bills =()=>{
     
@@ -24,14 +24,14 @@ const Bills =()=>{
         <div>  
             <Grid container spacing={3}>
             <Grid item xs={12} sm={8}>
-                 <BillsList/>
+                 <BillsList customers={customers} products={products} />
             </Grid>
             <Grid item xs={12} sm={4}>
-                <Paper style={{textAlign:"center"}} >
+                <Box style={{textAlign:"center"}} >
                     <AddBill customers ={customers}
                             products={products}
                     />
-                </Paper>
+                </Box>
             </Grid>
 
             </Grid>

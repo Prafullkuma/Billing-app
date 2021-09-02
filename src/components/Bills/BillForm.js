@@ -1,14 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
+import {Button,TextField,Dialog,DialogTitle,Input,FormControl,DialogContent,Box,DialogActions} from '@material-ui/core'
+import { useSelector } from 'react-redux'
 
-const BillForm=({customers,products,formSubmission})=>{
+const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
   
     const [myDate,setMyDate]=useState('')
-    const [inputList, setInputList] = useState([{ id:uuidv4(),product: "", quantity: "" }])
-
+    const [inputList, setInputList] = useState([{ id:uuidv4(),product: "",quantity: "" }])
     const [selectCustomer,setSelectCustomer]=useState('')
-    
     const [errorObj,setErrorObj]=useState({})
+
+    const user=useSelector((state)=>{
+        return state.user
+    })
+
+    //modal    
+    const [open, setOpen] = useState(false);
+
+    //reset form
+    useEffect(()=>{
+        if(isSaved){
+            setMyDate('')
+            setInputList([{ id:uuidv4(),product: "",quantity: "" }])
+            setSelectCustomer('') 
+            resetForm()
+        }
+    },[isSaved,resetForm])
+
+    //for errors
 
     let errors={}
 
@@ -29,6 +48,7 @@ const BillForm=({customers,products,formSubmission})=>{
             list[i][name]=value
             setInputList(list)
        }
+      
 
        //handle remove Button
        const handleRemoveClick=(i)=>{   
@@ -37,7 +57,7 @@ const BillForm=({customers,products,formSubmission})=>{
          setInputList(list)
        }
        const handleAddClick=()=>{
-            setInputList([...inputList,{id:uuidv4(),product:"",quantity:""}])
+            setInputList([...inputList,{id:uuidv4(), product:"",quantity:"0"}])
        }
        
        //validation
@@ -57,9 +77,9 @@ const BillForm=({customers,products,formSubmission})=>{
          }
          if(Number(inputList[0].quantity)==="0"){
             errors.quantity="Quantity can't be 0"
-         }
+         }  
        }
-
+       //formSubmit
        const handleSubmit=(e)=>{
             e.preventDefault()
             runValidator()
@@ -67,8 +87,9 @@ const BillForm=({customers,products,formSubmission})=>{
                 setErrorObj({})
                 const formData={
                     date: myDate,
-                    user:selectCustomer,
-                    lineItems:inputList
+                    customer:selectCustomer,
+                    lineItems:inputList,
+                    user:user !== undefined && user._id
                 }
                 formSubmission(formData)
             }else{
@@ -76,65 +97,132 @@ const BillForm=({customers,products,formSubmission})=>{
             }
       } 
 
+      //for modal
+
+        const handleClickOpen = () => {
+            setOpen(true);
+        };
+
+        const handleClose = () => {
+            setOpen(false);
+            setErrorObj({})
+        };
+
     return(
         <div>
-            <form onSubmit={handleSubmit}>
-                  <input type="date" value={myDate} onChange={handleDateChange}/>
-                  <br/>
-                  <span>{errorObj.myDate && <span>{errorObj.myDate}</span>}</span>        
-                <br/><br/>
+                 <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                    Generate Bill Here
+                </Button>
+                 <Dialog open={open} onClose={handleClose} >
+                     <DialogTitle id="form-dialog-title"> Add Your Bill</DialogTitle>
+                     <DialogContent>
+          
+                        <Box
+                         display="flex"
+                         flexWrap="nowrap"
+                         sx={{ maxWidth: 400}}
+                         p={1}
+                         m={1}
+                        >
+                            <Box p={1} >
+                            <form  noValidate  onSubmit={handleSubmit} autoComplete="off">
+                                <FormControl>
+                                    <Input type="date" 
+                                    style={{  width: '25ch'}} value={myDate} onChange={handleDateChange}/>
+                                    <br/>
+                                    <span style={{color:'red'}}>{errorObj.myDate && <span>{errorObj.myDate}</span>}</span>        
+                                    <br/>
+                                </FormControl>
+                                <br/><br/>  
+                                
+                                <FormControl>
+                                <div>
+                                    <TextField
+                                    style={{  width: '25ch'}}
+                                    select
+                                    label="Select Customer"
+                                    value={selectCustomer} onChange={handleSelectChange}
+                                    >
+                                        {customers.map((ele,i)=>{
+                                            return <option key={i} value={ele._id}>{ele.name}</option>
+                                        })}  
+                                    </TextField>
+                                    <br/>
+                                        <span style={{color:'red'}}>{errorObj.selectCustomer && <span>{errorObj.selectCustomer}</span>}</span>
+                                        <br/>
+                                   </div>    
+                                </FormControl>
+                                <FormControl>
+                                {inputList.map((ele,i)=>{
+                                return (
+                                    <div key={i}>
+                                        <TextField  style={{  width: '25ch'}}
+                                            select
+                                            label="Select Products"
+                                            value={ele.product} 
+                                            name="product" 
+                                            onChange={(e)=>handleInputChange(e,i)}
+                                         >
+                                            { 
+                                                products.length !==0 && products.map((ele,ind)=>{
+                                                return <option value={ele._id} key={ind}>{ele.name}</option>
+                                           
+                                            })}
+                                             
+                                        </TextField>
+                                      <br/>
+                                        <span style={{color:'red'}}>{errorObj.product && <span>{errorObj.product}</span> }</span>
+                                        <br/>
+                                        {/* <Button onClick={handleIncrement}> +</Button>
+                                         {ele.count}
+                                        <Button onClick={handleDecrement}> -</Button> */}
+                                            <input
+                                            name="quantity"
+                                            placeholder="Enter the Quanity"
+                                            value={ele.quantity}
+                                            onChange={(e)=>handleInputChange(e,i)}   
+                                        />
+                                        <br/>
+                                        <span style={{color:'red'}}>{errorObj.quantity && <span>{errorObj.quantity}</span>}</span>
+                                        <br/>
+                                        <div>
+                                            {inputList.length !==1 &&
+                                            <>
+                                            <Button  color="secondary" onClick={()=>handleRemoveClick(i)}>
+                                                remove
+                                            </Button>
+                                            <br/>
+                                            </>
+                                            }
+                                            {
+                                                inputList.length -1 ===i &&
+                                                <Button variant="contained" color="primary" onClick={handleAddClick}>
+                                                     more
+                                                </Button>
+                                            }
 
-                <select value={selectCustomer} onChange={handleSelectChange}>
-                    <option value="">Select Customer</option>
-                    {customers.map((ele,i)=>{
-                        return <option key={i} value={ele._id}>{ele.name}</option>
-                    })}    
-                </select>
-                <br/>
-                <span>{errorObj.selectCustomer && <span>{errorObj.selectCustomer}</span>}</span>
-                <br/>
-                {inputList.map((ele,i)=>{
-                   return (
-                       <div key={i}>
-                       <select value={ele.product} name="product" onChange={(e)=>handleInputChange(e,i)}>
-                           <option value="">Select Product</option>
-                            { products.length !==0 && products.map((ele,ind)=>{
-                                return <option value={ele._id} key={ind}>{ele.name}</option>
-                            })}
-                       </select>
-                       <br/>
+                                        </div>
+                                    </div>
+                                ) 
+                                })}
 
-                       <span>{errorObj.product && <span>{errorObj.product}</span> }</span>
-                       <br/>
+                                </FormControl>
+                                    
+                                    <DialogActions>
+                                            <Button onClick={handleClose} color="primary">
+                                                Cancel
+                                            </Button>
+                                            <Button  variant="outlined" type="submit" color="primary">
+                                                   add Bill
+                                            </Button> 
+                                    </DialogActions>      
+                            </form>
+                            </Box>
+                        
+                        </Box>
+                     </DialogContent>  
 
-                       <input
-                            name="quantity"
-                            placeholder="Enter the Quanity"
-                            value={ele.quantity}
-                            onChange={(e)=>handleInputChange(e,i)}   
-                        />
-                        <br/>
-                        <span>{errorObj.quantity && <span>{errorObj.quantity}</span>}</span>
-                        <br/>
-                        <div>
-                            {inputList.length !==1 &&
-                             <button onClick={()=>handleRemoveClick(i)}>
-                                 remove
-                             </button>
-                            }
-                            {
-                                inputList.length -1 ===i &&
-                                <button onClick={handleAddClick}>
-                                    add more
-                                </button>
-                            }
-
-                        </div>
-                       </div>
-                   ) 
-                })}
-                <input type="submit" value="Add Bill"/>  
-            </form>
+                 </Dialog>
         </div>
     )
 }
