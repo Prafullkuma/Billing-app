@@ -17,12 +17,9 @@ const BillsListItems=({srNo,customer,total,date,_id,customers,products,})=>{
     //get Customer Name
     const getCustomer=(id)=>{
         const result=customers.find((ele)=>{
-             if(ele._id===id){
-                return {name:ele.name}  
-             } 
+             return ele._id===id && { name:ele.name}  
         })
         return result !== undefined && result.name
-    
     }
     //View Bill
 

@@ -35,9 +35,7 @@ const ViewProductDetails=({_id,customers,products})=>{
 
      const getNameOfCustomer=(_id)=>{
         const result=customers.find((ele)=>{
-            if(ele._id===_id){
-                return {cName:ele.name}
-            }
+            return ele._id ===_id  && { cName:ele.name}
         })
         if(Object.keys(result).length !==0){
             return result

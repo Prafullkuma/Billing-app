@@ -8,6 +8,7 @@ import { getAllProducts } from '../../actions/productsAction'
 import ProductsListItems from './ProductsListItem'
 
 
+
 const useStyles = makeStyles({
     table: {
       minWidth: 150,
@@ -39,7 +40,7 @@ const ProductsList=()=>{
           setData([...products])
         },[products])
 
-        const handleChangePage = (event, newPage) => {
+        const handleChangePage = ( newPage) => {
             setPage(newPage);
           };
         
@@ -59,39 +60,50 @@ const ProductsList=()=>{
 
       //sorting
 
-      const handleSelectChange=(e)=>{
-        const res=e.target.value
-        setOrder(res)
-        return data.sort((a,b)=>{
+      const sortByName=(data,param)=>{
+        const result=data.sort((a,b)=>{
             const obj1=a["name"].toLowerCase()
-            const obj2=b["name"].toLowerCase() 
-            // By name  either ascending or desending
-              if(res==="asc"){
-                if (obj1 < obj2) {
-                    return -1
-                  }
-                  if (obj1 > obj2) {
-                    return 1
-                  }
-                  return 0
-              }
-              if(res==="dscn"){
-                if(obj1 > obj2) {
-                    return -1
-                  }
-                  if (obj1 < obj2) {
-                    return 1
-                  }
-                  return 0
-              }
-              // By Price  either ascending or desending
-              if(res==="priceasc"){
-                return a.price-b.price
-              }
-              if(res==="pricedscn"){
-                return b.price-a.price 
-              }
+            const obj2=b["name"].toLowerCase()
+            if(param==="asc"){
+              if(obj1 < obj2) {return -1 }
+              if (obj1 > obj2) { return 1 }
+            }
+            return 0
         })
+        setData(result)
+      }
+      const sortByDescName=(data,param)=>{
+        const result=data.sort((a,b)=>{
+            const obj1=a["name"].toLowerCase()
+            const obj2=b["name"].toLowerCase()
+            if(param==="dscn"){
+              if(obj1 > obj2) {return -1 }
+              if (obj1 < obj2) { return 1 }
+            }
+            return 0
+        })
+        setData(result)
+      }
+      const sortByPrice=(data,param)=>{
+          const result=data.sort((a,b)=>{
+              return param==="priceasc" && a.price-b.price     
+          }) 
+          setData(result)
+      }
+      const sortByPriceDenc=(data,param)=>{
+        const result=data.sort((a,b)=>{
+            return param==="pricedscn" && b.price-a.price
+        })
+        setData(result)
+     }
+
+      const handleSelectChange=(e)=>{
+            const res=e.target.value
+            setOrder(data,res)
+            sortByName(data,res)
+            sortByDescName(data,res)
+            sortByPrice(data,res)
+            sortByPriceDenc(data,res)
       }
       return(
             <div>
