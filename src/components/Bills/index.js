@@ -7,8 +7,10 @@ import BillsList from './BillsList'
 
 import {Grid,Box} from '@material-ui/core'
 
+
 const Bills =()=>{
-    
+   
+
     const dispatch=useDispatch()
     const {customers,products}=useSelector((state)=>{
         return state
@@ -21,19 +23,19 @@ const Bills =()=>{
 
 
     return(
-        <div>  
-            <Grid container spacing={3}>
-            <Grid item xs={12} sm={8}>
-                 <BillsList customers={customers} products={products} />
+        <div style={{margin:'20px'}}>  
+            <Grid container >
+             <Grid item xs={12} sm={8}>
+                 <BillsList customers={customers} products={products} />                 
             </Grid>
+
             <Grid item xs={12} sm={4}>
                 <Box style={{textAlign:"center"}} >
                     <AddBill customers ={customers}
                             products={products}
                     />
-                </Box>
+                </Box> 
             </Grid>
-
             </Grid>
 
         </div>

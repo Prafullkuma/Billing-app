@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
-import {Button,Dialog,DialogTitle,Input,FormControl,DialogContent,Box,DialogActions} from '@material-ui/core'
+import {Button,Dialog,DialogTitle,Input,TableContainer,Table,TableCell,TableRow,TableHead,TableBody,FormControl,DialogContent,Box,DialogActions} from '@material-ui/core'
 import { useSelector } from 'react-redux'
-
+import CartItem from './CartItem'
 const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
   
     const [myDate,setMyDate]=useState('')
-    const [inputList, setInputList] = useState([{ id:uuidv4(),product: "",quantity: "" }])
+    const [inputList, setInputList] = useState([{ id:uuidv4(),product: "",quantity: "1" }])
     const [selectCustomer,setSelectCustomer]=useState('')
     const [errorObj,setErrorObj]=useState({})
 
@@ -21,7 +21,7 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
     useEffect(()=>{
         if(isSaved){
             setMyDate('')
-            setInputList([{ id:uuidv4(),product: "",quantity: "" }])
+            setInputList([{ id:uuidv4(),product: "",quantity: "1" }])
             setSelectCustomer('') 
             resetForm()
         }
@@ -51,15 +51,15 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
             setInputList(list)
        }
       
-
        //handle remove Button
        const handleRemoveClick=(i)=>{   
          const list=[...inputList]
          list.splice(i,1)
          setInputList(list)
        }
+       
        const handleAddClick=()=>{
-            setInputList([...inputList,{id:uuidv4(), product:"",quantity:"0"}])
+            setInputList([...inputList,{id:uuidv4(), product:"",quantity:"1"}])
        }
        
        //validation
@@ -71,15 +71,17 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
          if(selectCustomer.length===0){
              errors.selectCustomer="Your not preset User"
          }
-         if(inputList[0].product.length===0){
-             errors.product="Product is not present"
-         }
-         if(inputList[0].quantity.length===0){
-             errors.quantity="Quantity can't be empty"
-         }
-         if(Number(inputList[0].quantity)===0){
-            errors.quantity="Quantity can't be 0"
-         }  
+         inputList.forEach((ele)=>{
+             if(ele.product.length===0){
+              return  errors.product="Product is not present"
+             }
+             if(ele.quantity.length===0){
+               return errors.quantity="Quantity can't be empty"
+             }
+             else if(Number(ele.quantity)<1){
+                return errors.quantity="Quantity can't be negative"
+             }
+         }) 
        }
        //formSubmit
        const handleSubmit=(e)=>{
@@ -97,19 +99,37 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
             }else{
                 setErrorObj(errors)
             }
-      } 
+       } 
 
-      //for modal
+       //for modal
 
         const handleClickOpen = () => {
             setOpen(true);
         };
-
         const handleClose = () => {
             setOpen(false);
             setErrorObj({})
         };
-
+        const incrementQuantity=(id)=>{
+          const result=inputList.map((ele)=>{
+              if(ele.id===id){
+                  return {...ele,...{quantity:Number(ele.quantity)+1}}
+              }else{
+                  return {...ele}
+              }
+          })
+          setInputList(result)
+        }
+        const decrementQuantity=(id)=>{
+            const result=inputList.map((ele)=>{
+                if(ele.id===id){
+                    return {...ele,...{quantity:Number(ele.quantity)-1}}
+                }else{
+                    return {...ele}
+                }
+            })
+            setInputList(result)
+        }
     return(
         <div>
                  <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -193,7 +213,7 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                                             </>
                                             }
                                             {
-                                                inputList.length -1 ===i &&
+                                                inputList.length -1 === i &&
                                                 <Button variant="contained" color="primary" onClick={handleAddClick}>
                                                      more
                                                 </Button>
@@ -216,11 +236,32 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                                     </DialogActions>      
                             </form>
                             </Box>
-                        
-                        </Box>
-                     </DialogContent>  
+                             <Box p={1} >
+                                 <TableContainer>
+                                    <Table border="1">
+                                          <TableHead>
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Quantity</th> 
+                                                </tr>
+                                            </TableHead>
 
+                                            <tbody>
+                                            {
+                                                inputList.map((ele,i)=>{
+                                                    return <CartItem customers={customers} products={products} incrementQuantity={ incrementQuantity} decrementQuantity={decrementQuantity} key={i} {...ele}/>
+                                                })  
+                                            }  
+                                            </tbody>     
+                                    </Table>  
+                              </TableContainer>
+
+                            </Box>
+                            
+                        </Box>
+                     </DialogContent>     
                  </Dialog>
+                 
         </div>
     )
 }

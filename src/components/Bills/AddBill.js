@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import BillForm from './BillForm'
 import {addBillsAction} from '../../actions/billsAction'
 
+
 const AddBill=({customers,products})=>{
     const dispatch=useDispatch()
     const [isSaved,setIsSaved]=useState(false)
@@ -19,8 +20,9 @@ const AddBill=({customers,products})=>{
         setIsSaved(!isSaved)
     }
    return(
-       <div style={{margin:'20px'}}>
+       <div style={{margin:'30px'}}>
             <BillForm customers={customers} products={products} formSubmission={formSubmission} resetForm={resetForm} isSaved={isSaved}/>
+           
        </div>
    ) 
 }

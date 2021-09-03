@@ -2,7 +2,7 @@ import React, { useEffect ,useState} from 'react'
 import BillsListItems from './BillsListItem'
 import {getAllBillsAction} from '../../actions/billsAction'
 import { useDispatch ,useSelector} from 'react-redux'
-import { Table,TableContainer,Typography,TablePagination,TableHead,TableRow,TableBody,TableCell} from '@material-ui/core'
+import { Table,TableContainer,TablePagination,TableHead,TableRow,TableBody,TableCell} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -62,29 +62,44 @@ const BillsList=({customers,products})=>{
         setPage(0);
       };    
 
-      const handleSearchChange=(e)=>{
-            const result=e.target.value
-            setSearchTerm(result)
-            filteredResult(result)
-      }
-      const filteredResult=(term)=>{
-        // const result=customers.filter((ele)=>{
-        //      return ele.name.toLowerCase().includes(term.toLowerCase())
-        // }).map((ele)=>{
-        //     return ele._id
-        // })
-    }
+      //Searching 
+
+    //   const handleSearchChange=(e)=>{
+    //         const result=e.target.value
+    //         setSearchTerm(result)
+    //         filterData(result)     
+    //   }
+    //   const filterData=(query)=>{
+    //       const result=customers.filter((ele)=>{
+    //           return ele.name.toLowerCase().includes(query.toLowerCase())
+    //       }).map((ele)=>{
+    //           return ele._id
+    //       })
+
+    //       const gotData=data.filter((e)=>{
+    //             return result.forEach(element => {
+    //                  return e._id===element
+    //             });   
+    //       })
+    //       console.log(gotData)
+          
+    //   }
+     
     return(
         <div>
             <TableContainer style={{margin:'20px'}}>
                 <h1>Bills List-{data.length}</h1>
                 <br/><br/>
                 <label id="orderBy">Order By</label>
+
                 <select htmlFor="orderBy" value={selectTerm} onChange={handleChange}>
                   <option value="">Order By</option>  
                   <option value="asc">Price Asc</option>
                   <option value="desc"> Price Desc</option>
-                </select>   
+                </select>  
+
+                 {/* <input type="text" value={searchTerm} placeholder="Enter name to search" onChange={handleSearchChange}/><br/> */}
+
                    <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
@@ -108,7 +123,7 @@ const BillsList=({customers,products})=>{
                         </TableBody>
                 </Table>  
                 <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
+                    rowsPerPageOptions={[5, 10, 15]}
                     component="div"
                     count={data.length}
                     rowsPerPage={rowsPerPage}
