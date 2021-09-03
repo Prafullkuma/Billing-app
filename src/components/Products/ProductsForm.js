@@ -65,25 +65,22 @@ const ProdcutsForm=({formSubmission,toggleStatus,isSaved})=>{
         const handleClose = () => {
             setOpen(false);
         };
-
-
     return(
         <div style={{margin:'30px'}}>
              <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                     Add Product
              </Button>
              <Dialog  open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                    <DialogContentText style={{marginTop:'30px'}}>
-                        <Typography color="primary" variant="h6">Add your products </Typography>
-                
-                   </DialogContentText >
                     <form onSubmit={handleSubmit} style={{margin:'40px'}} className={classes.root}>
-
+                        <DialogContentText >
+                            <Typography color="black" variant="h5">Add your products </Typography>
+                        </DialogContentText >
+                        
                         <TextField label="Name" className={classes.margin} margin="dense" fullWidth type="text" placeholder="Enter produt name" value={name} onChange={(e)=>setName(e.target.value)}/><br/>
-                        <span>{errorObj.name && <span>{errorObj.name}</span>}</span>
+                        <span>{errorObj.name && <span style={{color:'red'}}>{errorObj.name}</span>}</span>
                         <br/>
                         <TextField label="Price"  margin="dense" fullWidth type="text" placeholder="Enter Price" value={price} onChange={(e)=>setPrice(e.target.value)}/><br/>
-                        <span>{errorObj.price && <span>{errorObj.price}</span>}</span>
+                        <span>{errorObj.price && <span style={{color:'red'}}>{errorObj.price}</span>}</span>
                         <br/>
 
                     <DialogActions>
@@ -91,7 +88,7 @@ const ProdcutsForm=({formSubmission,toggleStatus,isSaved})=>{
                             Cancel
                         </Button>
 
-                        <Button variant="contained" onClick={handleClose} color="secondary"  type="submit">Add Product</Button>
+                        <Button variant="contained" color="secondary"  type="submit">Add Product</Button>
                     </DialogActions>
                     </form>
             </Dialog>

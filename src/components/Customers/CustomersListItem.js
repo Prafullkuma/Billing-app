@@ -57,7 +57,7 @@ const CustomersListItem=({_id ,srNo,name:Ename,mobile:Emobile,email:Eemail,creat
                 return ele._id===_id
             })
             Swal.fire(
-                  `Name:${result,name},Email:${result.email}`,
+                  `Name:${result.name} Email:${result.email}`,
                   `Mobile:${result.mobile}`,  
                   'success'
               )
@@ -137,12 +137,13 @@ const CustomersListItem=({_id ,srNo,name:Ename,mobile:Emobile,email:Eemail,creat
                
              </TableCell>
                   <TableCell>
+                      
                             <IconButton edge="end"  onClick={()=>deleteHandle(_id)} aria-label="delete">
                                     <DeleteIcon title="Delete" />
                             </IconButton>
                  </TableCell>
                       <TableCell>
-                            <IconButton edge="end"onClick={()=>handleView(_id)}  aria-label="view">
+                            <IconButton edge="end" onClick={()=>handleView(_id)}  aria-label="view">
                                     <ViewListIcon  title="View" />
                             </IconButton>
                        </TableCell>

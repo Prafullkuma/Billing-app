@@ -32,7 +32,7 @@ const AddCustomers=()=>{
 
     return(
         <div>
-            <Typography variant="h4">Add Customer</Typography>
+            <Typography variant="h5">Add Customer</Typography>
             
             <CustomersForm formSubmission={formSubmission} resetFormHandle={resetFormHandle} isSaved={isSaved}/>
         </div>

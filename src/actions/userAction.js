@@ -40,7 +40,7 @@ export const loginAction=(formData,moveLink,successMessage,errorMessage,handleLo
             else{
                 localStorage.setItem('token',`Bearer ${result.token}`)
                 successMessage()
-                moveLink.push('/')
+                moveLink.push('/dashboard')
                 handleLoginStatus()
             }
         })
@@ -60,6 +60,7 @@ export const accoutAction=()=>{
                }
           }
         )
+        
         .then((res)=>{
             const result=res.data
             if(result){

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Paper,Grid,Typography} from '@material-ui/core'
+import {Box,Grid} from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles";
 
 
@@ -19,23 +19,15 @@ const Products=()=>{
 
     const classes = useStyles();
     return(
-        <div>
-            <Grid container spacing={0}>
-                <Grid item xs={12}>
-                    <Paper className={classes.paper}>
-                            <Typography variant="h4">Products</Typography>
-                    </Paper>
-                </Grid>
-                <Grid item xs={10}>
-                      <Paper className={classes.paper}>
+        <div style={{margin:'20px'}}>
+            <Grid container >
+                <Grid item xs={12} sm={8}>
                          <ProductsList/>
-                    </Paper>
                 </Grid>
-
-                <Grid item xs={2}>
-                      <Paper className={classes.paper}> 
+                <Grid item >
+                    <Box className={classes.paper}> 
                         <AddProducts/>
-                    </Paper>
+                    </Box>
                 </Grid>
             </Grid>
 

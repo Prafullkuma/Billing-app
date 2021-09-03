@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles } from "@material-ui/core/styles";
 
-import {Paper,Grid,Typography} from '@material-ui/core'
+import {Grid,Box} from '@material-ui/core'
 import AddCustomer from './AddCustomer'
 
 import CustomersList from './CustomersList'
@@ -17,22 +17,16 @@ const useStyles = makeStyles((theme) => ({
 const Customers=()=>{
     const classes = useStyles();
     return(
-        <div>
+        <div style={{margin:'20px'}}  >
             <Grid container >
-                <Grid item xs={12}>
-                    <Paper className={classes.paper}>
-                             <Typography variant="h4">Customer</Typography>
-                    </Paper>
+                <Grid item xs={12} sm={8}>
+                         <CustomersList/>
                 </Grid>
-                <Grid item xs={8}>
-                      <Paper className={classes.paper}>
-                      <CustomersList/>
-                      </Paper>
-                </Grid>
-                <Grid item xs={3} spacing={2}>
-                    <Paper className={classes.paper}>
+
+                <Grid item xs={12} sm={4}>
+                    <Box className={classes.paper}>
                            <AddCustomer/>
-                    </Paper>
+                    </Box >
                 </Grid>
 
             </Grid>

@@ -4,9 +4,17 @@ import {allCustomerListAction} from '../../actions/customersAction'
 import {getAllProducts}  from '../../actions/productsAction'
 import AddBill from './AddBill'
 import BillsList from './BillsList'
+import { makeStyles } from "@material-ui/core/styles";
 
 import {Grid,Box} from '@material-ui/core'
 
+const useStyles = makeStyles((theme) => ({
+    paper: {
+      padding: theme.spacing(2),
+      textAlign: "center",
+      color: theme.palette.text.primary
+    }
+  }));
 
 const Bills =()=>{
    
@@ -15,6 +23,7 @@ const Bills =()=>{
     const {customers,products}=useSelector((state)=>{
         return state
     })
+    const classes = useStyles();
 
     useEffect(()=>{
         dispatch(allCustomerListAction())
@@ -23,14 +32,14 @@ const Bills =()=>{
 
 
     return(
-        <div style={{margin:'20px'}}>  
+        <div >  
             <Grid container >
-             <Grid item xs={12} sm={8}>
-                 <BillsList customers={customers} products={products} />                 
-            </Grid>
+                <Grid item xs={12} sm={8}>
+                    <BillsList customers={customers} products={products} />                 
+                </Grid>
 
             <Grid item xs={12} sm={4}>
-                <Box style={{textAlign:"center"}} >
+                <Box className={classes.paper} >
                     <AddBill customers ={customers}
                             products={products}
                     />

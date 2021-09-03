@@ -95,8 +95,9 @@ const ProductsList=()=>{
       }
       return(
             <div>
-                <h3>Total Products-{data.length}</h3>
-                  <select style={{margin:'20px'}}  value={order} onChange={handleSelectChange}>
+                <h1>Total Products-{data.length}</h1>
+                 <label id="order">Order By</label>
+                  <select htmlFor="order" style={{margin:'20px'}}  value={order} onChange={handleSelectChange}>
                       <option value="">Select Option</option>
                     <option value="asc">Order ASC</option>
                     <option value="dscn">Order DSCN</option>
@@ -114,7 +115,7 @@ const ProductsList=()=>{
                     </>
                     :
                     <div style={{margin:'30px'}}>
-                        <TableContainer component={Box} item xs={9} >
+                        <TableContainer component={Box} item="true" xs={9} >
                             
 
                         <Table className={classes.table} >
@@ -128,10 +129,7 @@ const ProductsList=()=>{
                                         </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                {  data.length ===0
-                                    ?
-                                        <h1>No products found</h1>
-                                    :    
+                                {     
                                       data
                                         .slice(page * rowsPerPage,page* rowsPerPage +rowsPerPage )
                                         .map((ele,i)=>{

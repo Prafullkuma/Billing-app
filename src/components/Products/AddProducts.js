@@ -27,8 +27,7 @@ const AddProducts=()=>{
     }
     
     return(
-        <div>
-            
+        <div style={{margin:'40px'}}>
             <ProductsForm formSubmission={formSubmission} toggleStatus={toggleStatus} isSaved={isSaved} />
         </div>
     )

@@ -87,15 +87,16 @@ const CustomersList=()=>{
     
     return(
         <div> 
-            <h3>Total Customer-{data.length}</h3>
-            <select style={{margin:'20px'}} value={order} onChange={handleSelectChange}>
+            <h1>Total Customer-{data.length}</h1>
+            <label id="order">Order By</label>
+            <select  htmlFor="order" style={{margin:'20px'}} value={order} onChange={handleSelectChange}>
                 <option value="">Select Option</option>
                 <option value="asc">Order ASC</option>
                 <option value="dscn">Order DSCN</option>
             </select>
 
             <TextField label="Search" placeholder="Enter Term to search" type="text" value={search} onChange={handleSeachChange} />
-
+            <br/>
             {
                 customers.length===0 ?
                 <>
@@ -118,10 +119,7 @@ const CustomersList=()=>{
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                            {   data.length===0
-                                    ?
-                                      <h1> No Customer Found</h1>
-                                    :
+                            {  
                                         data
                                         .slice(page * rowsPerPage,page* rowsPerPage +rowsPerPage )
                                         .map((ele,i)=>{

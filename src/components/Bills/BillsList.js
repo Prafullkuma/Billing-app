@@ -21,13 +21,13 @@ const BillsList=({customers,products})=>{
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    const [searchTerm,setSearchTerm]=useState('')
+    // const [searchTerm,setSearchTerm]=useState('')
 
     const classes = useStyles();
 
     useEffect(()=>{
          dispatch(getAllBillsAction())
-    },[])
+    },[dispatch])
 
     const bills=useSelector((state)=>{
         return state.bills
@@ -92,11 +92,12 @@ const BillsList=({customers,products})=>{
                 <br/><br/>
                 <label id="orderBy">Order By</label>
 
-                <select htmlFor="orderBy" value={selectTerm} onChange={handleChange}>
+                <select htmlFor="orderBy" style={{margin:'10px'}} value={selectTerm} onChange={handleChange}>
                   <option value="">Order By</option>  
                   <option value="asc">Price Asc</option>
                   <option value="desc"> Price Desc</option>
                 </select>  
+                <br/>
 
                  {/* <input type="text" value={searchTerm} placeholder="Enter name to search" onChange={handleSearchChange}/><br/> */}
 

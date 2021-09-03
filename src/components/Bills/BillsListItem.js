@@ -3,7 +3,7 @@ import {useDispatch} from'react-redux'
 import ViewProductDetails from './ViewProductDetails'
 
 import {deleteBillsAction} from '../../actions/billsAction'
-import {TableRow,TableCell,Button,IconButton,Dialog,DialogActions ,DialogTitle,DialogContent,DialogContentText} from '@material-ui/core'
+import {TableRow,TableCell,Button,IconButton,Dialog,DialogActions ,DialogTitle,DialogContent} from '@material-ui/core'
 import ViewListIcon from '@material-ui/icons/ViewList';
 import DeleteIcon from '@material-ui/icons/Delete';
 import moment from 'moment'
@@ -21,9 +21,8 @@ const BillsListItems=({srNo,customer,total,date,_id,customers,products,})=>{
                 return {name:ele.name}  
              } 
         })
-        if(result !== undefined){
-            return result.name
-        }
+        return result !== undefined && result.name
+    
     }
     //View Bill
 

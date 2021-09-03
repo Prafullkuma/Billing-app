@@ -20,9 +20,8 @@ const AddBill=({customers,products})=>{
         setIsSaved(!isSaved)
     }
    return(
-       <div style={{margin:'30px'}}>
+       <div style={{margin:'40px'}}>
             <BillForm customers={customers} products={products} formSubmission={formSubmission} resetForm={resetForm} isSaved={isSaved}/>
-           
        </div>
    ) 
 }

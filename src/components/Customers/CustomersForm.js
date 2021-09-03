@@ -83,15 +83,15 @@ const CustomerForm=({formSubmission,isSaved,resetFormHandle,handleToggle})=>{
         <div>
               <form onSubmit={handleSubmit} className={classes.root}>
                   <TextField type="text" label="Name" name="name" placeholder="Enter name" value={name} onChange={handleChange}/><br/>
-                  <span>{errorObj.name && <span>{errorObj.name}</span>}</span>
+                  <span>{errorObj.name && <span style={{color:'red'}}>{errorObj.name}</span>}</span>
                   <br/>
                   <TextField type="text" label="Mobile" name="mobile" placeholder="Enter mobile" value={mobile} onChange={handleChange}/>
                   <br/>
-                  <span>{errorObj.mobile && <span>{errorObj.mobile}</span>}</span>
+                  <span>{errorObj.mobile && <span style={{color:'red'}}>{errorObj.mobile}</span>}</span>
                   <br/>
                   <TextField type="text" label="Email" name="email" placeholder="Enter email" value={email} onChange={handleChange}/>
                   <br/>
-                  <span>{errorObj.email && <span>{errorObj.email}</span>}</span>
+                  <span>{errorObj.email && <span style={{color:'red'}}>{errorObj.email}</span>}</span>
                   <br/><br/><br/>
                   <Button variant="contained" color="secondary" type="submit">Add customer</Button>
               </form>  

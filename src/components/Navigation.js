@@ -55,7 +55,9 @@ const Navigation=(props)=>{
             <AppBar position="static">
                 <Toolbar>
                 <Typography variant="h6" style={{flexGrow:1}}>
-                    <Link style={LinkStyle} to="/">BILLING APP</Link>
+                    
+                     <Link style={LinkStyle} to={isLoggedIn ? "/dashboard" : "/"}>BILLING APP</Link>
+                
                 </Typography>
                     <Typography>
                         {
@@ -99,17 +101,17 @@ const Navigation=(props)=>{
                     </Menu> 
             </AppBar>
             <Switch>
-                {/* <Route path="/" component={Home} exact/> */}
                 {
                     isLoggedIn ?
                      <Switch>
-                        {/* <Route path="/dashboard" component={DashBoard} exact/>
+                        <Route path="/dashboard" component={DashBoard} exact/> 
                         <Route path="/customers" component={Customers} exact/>
-                        <Route path="/products" component={Products} exact/>  */}
+                        <Route path="/products" component={Products} exact/> 
                         <Route path="/bills" component={Bills} exact/>
                     </Switch>
                     :
                     <Switch>
+                            <Route path="/" component={Home} exact/>
                             <Route  path="/register" component={Register} exact/>
                             <Route path="/login" render={(props)=><Login handleLoginStatus={handleLoginStatus} {...props}/>} exact/>    
                     </Switch> 
