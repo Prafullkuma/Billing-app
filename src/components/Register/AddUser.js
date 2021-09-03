@@ -1,5 +1,7 @@
 import React ,{useEffect, useState} from 'react'
 import validator from 'validator';
+import {Button,TextField} from '@material-ui/core'
+import {Link} from 'react-router-dom'
 
 const AddUser=({formSubmission,handleIsSaved,isSaved})=>{
      
@@ -91,27 +93,67 @@ const AddUser=({formSubmission,handleIsSaved,isSaved})=>{
     return(
         <div>
             <form onSubmit={handleSubmit}>
-                <input type="text"  name="username" value={username}  onChange={handleChange} placeholder="Enter Your name"/>
-                <span>{errorObj.username && <span>{errorObj.username}</span>}</span>
+                <TextField type="text" 
+                           label="Name" 
+                           color="primary" 
+                           name="username" 
+                           value={username}  
+                           onChange={handleChange} 
+                           placeholder="Enter Your name"/><br/>
+                <span>{errorObj.username && <span style={{color:'red'}}>{errorObj.username}</span>}</span>
                 <br/>
-                <input type="text"  name="email" value={email} onChange={handleChange} placeholder="Enter Email"/>
-                <span>{errorObj.email && <span>{errorObj.email}</span>}</span>
+
+                <TextField type="text" 
+                           label="Username" 
+                           color="primary"  
+                              
+                           name="email" 
+                           value={email} 
+                           onChange={handleChange} 
+                           placeholder="Enter Email"/><br/>
+                <span>{errorObj.email && <span style={{color:'red'}}>{errorObj.email}</span>}</span>
                
                 <br/>
-                <input type="text"  name="password" value={password} onChange={handleChange} placeholder="Enter Password"/>
-                <span>{errorObj.password && <span>{errorObj.password}</span>}</span>
+                <TextField type="text" 
+                           label="Password" 
+                           color="primary"
+                           name="password" 
+                           value={password} 
+                           onChange={handleChange} 
+                           placeholder="Enter Password"/><br/>
+                <span>{errorObj.password && <span style={{color:'red'}}>{errorObj.password}</span>}</span>
                
                 <br/>
-                <input type="text"  name="businessName" value={businessName} onChange={handleChange} placeholder="Enter business Name"/>
-                <span>{errorObj.businessName && <span>{errorObj.businessName}</span>}</span>
+                <TextField type="text" 
+                           label="Business Name"
+                           color="primary" 
+                            
+                           name="businessName" 
+                           value={businessName} 
+                           onChange={handleChange} 
+                           placeholder="Enter business Name"/><br/>
+                <span>{errorObj.businessName && <span style={{color:'red'}}>{errorObj.businessName}</span>}</span>
+                <br/>
+                <TextField type="text" 
+                           label="Address"
+                           color="primary"
+                           name="address" 
+                           value={address} 
+                           onChange={handleChange} 
+                           placeholder="Enter Address"/><br/>
+                <span>{errorObj.address && <span style={{color:'red'}}>{errorObj.address}</span>}</span>
                
                 <br/>
-                <input type="text"  name="address" value={address} onChange={handleChange} placeholder="Enter Address"/>
-                <span>{errorObj.address && <span>{errorObj.address}</span>}</span>
-               
-                <br/>
-                <input type="submit" value="Register"/><br/>
+                <Button type="submit" variant="contained" color="secondary">
+                    Register
+                </Button><br/>
             </form>
+            <br/>
+            <p>If your already register then </p> <br/>
+                <Button variant="contained" color="primary">
+                    <Link style={{color:'white',textDecoration:'none'}}to="/login">Login</Link> 
+                </Button>
+            
         </div>
     )
 }

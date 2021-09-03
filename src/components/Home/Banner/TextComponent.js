@@ -1,16 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 
 import ReactTypingEffect from 'react-typing-effect';
 
 
 const TextComponent=()=>{
 
-    const LinkStyle={        
-         color:'black',
-         fontWeight:'50px',
-         textDecoration:'none',  
-    }
     return(
         <div style={{textAlign:'center',marginTop:"150px",fontSize:'20px',textTransform:'uppercase'}}>
              <>
@@ -38,9 +32,6 @@ const TextComponent=()=>{
                     }}        
                 />
           </>
-            <div style={{margin:'50px', padding:'20px',border:'2px solid Black'}}>
-                <Link style={LinkStyle} to="/register">Take Me</Link>
-            </div>
         </div>
     )
 }

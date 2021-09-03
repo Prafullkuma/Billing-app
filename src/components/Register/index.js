@@ -3,20 +3,34 @@ import AddUser from './AddUser'
 import { registerAction } from '../../actions/userAction'
 import { useDispatch } from 'react-redux'
 import Swal from 'sweetalert2'
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid,Box } from '@material-ui/core'
+const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    paper: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+    },
+  }));
 
 const Register=(props)=>{
     const [isSaved,setIsSaved]=useState(false)
     const dispatch=useDispatch()
+    const classes = useStyles();
 
     const formSubmission=(formData)=>{      
+        
         const successMessage=()=>{
             Swal.fire({
                 icon: 'success',
                 text: 'Successfully registered'
             })
         }
+
         const errorMessage=(error)=>{
-            console.log("i got it from errors Message",error)
             Swal.fire({
                 icon:'error',
                 text:error
@@ -31,11 +45,16 @@ const Register=(props)=>{
     const handleIsSaved=()=>{
         setIsSaved(!isSaved)
     }
-
     return(
         <div>
-            <h1>Regitser</h1>
-            <AddUser formSubmission={formSubmission} isSaved={isSaved} handleIsSaved={handleIsSaved}/>
+            <Grid container >       
+                <Grid item xs={12}>
+                    <Box className={classes.paper}>
+                        <h1>REGISTER</h1><br/>
+                        <AddUser formSubmission={formSubmission} isSaved={isSaved} handleIsSaved={handleIsSaved}/>
+                    </Box>
+                </Grid>
+            </Grid>            
         </div>
     )
 }

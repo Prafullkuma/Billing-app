@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import validator from 'validator'
+import {TextField,Button} from '@material-ui/core'
+import {Link} from 'react-router-dom'
 
 const LoginUser=({formSubmission })=>{
     const [email,setEmail]=useState('')
@@ -46,16 +48,37 @@ const LoginUser=({formSubmission })=>{
             setErrorObj(errors)
          }
     }
+
     return(
         <div>
             <form onSubmit={submitHandle}>
-                <input type="text" name="email" value={email} onChange={handleChange} placeholder="Enter Email"/>
-                <span>{errorObj.email && <span>{errorObj.email}</span>}</span>
+                <TextField label="Email" 
+                           color="primary" 
+                           type="text" 
+                           name="email" 
+                           value={email} 
+                           onChange={handleChange} 
+                           placeholder="Enter Email"/>
+                           <br/>
+                <span>{errorObj.email && <span style={{color:'red'}}>{errorObj.email}</span>}</span>
                 <br/>
-                <input type="text" name="password" value={password} onChange={handleChange} placeholder="Enter Password" />
-                <span>{errorObj.password && <span>{errorObj.password}</span>}</span>
+                <TextField label="Password" 
+                           color="primary"
+                           type="text" 
+                           name="password" 
+                           value={password} 
+                           onChange={handleChange} 
+                           placeholder="Enter Password" /><br/>
+                <span>{errorObj.password && <span style={{color:'red'}}>{errorObj.password}</span>}</span>
                 <br/>
-                <input type="submit" value="Login"/>
+                <Button type="submit" variant="contained" color="secondary">
+                    Login
+                </Button>
+                <br/><br/>
+                <p>You dont have login details,</p> <br/>
+                <Button variant="contained" color="primary">
+                    <Link style={{color:'white',textDecoration:'none'}}to="/register">Register</Link> 
+                </Button>
             </form>
         </div>
     )

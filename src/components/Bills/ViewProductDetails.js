@@ -103,7 +103,7 @@ const ViewProductDetails=({_id,customers,products})=>{
            <div>
            <ReactTOPdf targetRef={ref} >
                 {({ toPdf }) => 
-                    <Button onClick={toPdf} variant="contained" color="secondary"  color="primary">
+                    <Button onClick={toPdf} variant="contained"   color="primary">
                        Download
                    </Button>
                  }

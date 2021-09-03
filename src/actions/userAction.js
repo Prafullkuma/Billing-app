@@ -9,19 +9,18 @@ export const registerAction=(formData,successMessage,setSavedDetails,moveLink,er
            axios.post(`http://dct-billing-app.herokuapp.com/api/users/register`,formData)
            .then((res)=>{
                const result=res.data
-
-               console.log("data error i got",result)
-
-               if(result.message){
-                     errorMessage(result.message)
-               }
-               else{
-                  setSavedDetails()
-                  successMessage()
-                  moveLink.push('/login')
-               }     
+                 if(result.errors){
+                   errorMessage(result.errors) 
+                }  
+                else{
+                    setSavedDetails()
+                    successMessage()
+                    moveLink.push('/dashboard')
+                } 
+                                
            })
            .catch((err)=>{
+               console.log(err)
                alert(err.message)
            })
     }
@@ -32,7 +31,6 @@ export const loginAction=(formData,moveLink,successMessage,errorMessage,handleLo
         axios.post(`http://dct-billing-app.herokuapp.com/api/users/login`,formData)
         .then((res)=>{
             const result=res.data
-            
 
             if(result.errors){
                 errorMessage(result)
@@ -60,7 +58,6 @@ export const accoutAction=()=>{
                }
           }
         )
-        
         .then((res)=>{
             const result=res.data
             if(result){

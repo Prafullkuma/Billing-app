@@ -5,10 +5,27 @@ import Swal from 'sweetalert2'
 import { loginAction } from '../../actions/userAction'
 
 import { useDispatch } from 'react-redux'
+import { Grid,Box} from '@material-ui/core'
+
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    paper: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+    },
+  }));
+
 
 const Login=(props)=>{
     const { handleLoginStatus }=props
     const dispatch=useDispatch()
+
+    const classes = useStyles();
 
     const formSubmission=(formData)=>{
         const successMessage=()=>{
@@ -28,7 +45,15 @@ const Login=(props)=>{
 
     return(
         <div>
-            <LoginUser formSubmission={formSubmission}/> 
+            <Grid container >       
+                <Grid item xs={12}>
+                    <Box className={classes.paper}>
+                        <h1>LOGIN</h1><br/>
+                        <LoginUser formSubmission={formSubmission}/> 
+                    </Box>
+                </Grid>
+            </Grid>  
+           
         </div>
     )
 }
