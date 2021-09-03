@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux'
 import Swal from 'sweetalert2'
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid,Box } from '@material-ui/core'
+import './setBack.css'
+
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -39,10 +41,10 @@ const Register=(props)=>{
         setIsSaved(!isSaved)
     }
     return(
-        <div>
-            <Grid container >       
+        <div className="root">
+            <Grid container>       
                 <Grid item xs={12}>
-                    <Box className={classes.paper}>
+                    <Box className={classes.paper} id="child">
                         <h1>REGISTER</h1><br/>
                         <AddUser formSubmission={formSubmission} isSaved={isSaved} handleIsSaved={handleIsSaved}/>
                     </Box>

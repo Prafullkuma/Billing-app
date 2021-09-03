@@ -18,6 +18,7 @@ import DashBoard from './DashBoard'
 import Customers from './Customers'
 import Products from './Products'
 import Bills from './Bills'
+import PageNotFound from './PageNotFound'
 
 const Navigation=(props)=>{
     const {handleLoginStatus,isLoggedIn}=props
@@ -110,14 +111,15 @@ const Navigation=(props)=>{
                         <Route path="/customers" component={Customers} exact/>
                         <Route path="/products" component={Products} exact/> 
                         <Route path="/bills" component={Bills} exact/>
+                        <Route component={PageNotFound} />
                     </Switch>
                     :
                     <Switch>
                             <Route  path="/register" component={Register} exact/>
                             <Route path="/login" render={(props)=><Login handleLoginStatus={handleLoginStatus} {...props}/>} exact/>    
+                            <Route component={PageNotFound} />
                     </Switch> 
                  }
-                
             </Switch>
         </div>
     )

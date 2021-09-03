@@ -44,10 +44,10 @@ const Login=(props)=>{
     }
 
     return(
-        <div>
+        <div className="root">
             <Grid container >       
                 <Grid item xs={12}>
-                    <Box className={classes.paper}>
+                    <Box className={classes.paper} id="child">
                         <h1>LOGIN</h1><br/>
                         <LoginUser formSubmission={formSubmission}/> 
                     <hr style={{margin:'10px'}}/>
