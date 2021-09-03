@@ -16,9 +16,10 @@ const CustomersList=()=>{
 
     const [order,setOrder]=useState('')    
     const [search,setSearch]=useState('')
-    const [page, setPage] = useState(0);
     const [data,setData]=useState([])
 
+    const [page, setPage] = useState(0);
+   
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const dispatch=useDispatch()

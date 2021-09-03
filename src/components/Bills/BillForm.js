@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
-import {Button,TextField,Dialog,DialogTitle,Input,FormControl,DialogContent,Box,DialogActions} from '@material-ui/core'
+import {Button,Dialog,DialogTitle,Input,FormControl,DialogContent,Box,DialogActions} from '@material-ui/core'
 import { useSelector } from 'react-redux'
 
 const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
@@ -42,8 +42,10 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
         }
        //handleing input and select fields
        const handleInputChange=(e,i)=>{
+           
             const name=e.target.name
             const value=e.target.value
+            
             const list=[...inputList]
             list[i][name]=value
             setInputList(list)
@@ -64,18 +66,18 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
 
        const runValidator=()=>{
          if(myDate.length ===0){
-             errors.myDate="Date is not selected"
+             errors.myDate="Date is not preset"
          }
          if(selectCustomer.length===0){
-             errors.selectCustomer="Your not selected User"
+             errors.selectCustomer="Your not preset User"
          }
          if(inputList[0].product.length===0){
-             errors.product="Product is not selected"
+             errors.product="Product is not present"
          }
          if(inputList[0].quantity.length===0){
              errors.quantity="Quantity can't be empty"
          }
-         if(Number(inputList[0].quantity)==="0"){
+         if(Number(inputList[0].quantity)===0){
             errors.quantity="Quantity can't be 0"
          }  
        }
@@ -118,11 +120,11 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                      <DialogContent>
           
                         <Box
-                         display="flex"
-                         flexWrap="nowrap"
-                         sx={{ maxWidth: 400}}
-                         p={1}
-                         m={1}
+                            display="flex"
+                            flexWrap="nowrap"
+                            sx={{ maxWidth: 400}}
+                            p={1}
+                            m={1}
                         >
                             <Box p={1} >
                             <form  noValidate  onSubmit={handleSubmit} autoComplete="off">
@@ -137,16 +139,15 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                                 
                                 <FormControl>
                                 <div>
-                                    <TextField
-                                    style={{  width: '25ch'}}
-                                    select
-                                    label="Select Customer"
-                                    value={selectCustomer} onChange={handleSelectChange}
+                                    <select
+                                        style={{width: '25ch'}}
+                                        value={selectCustomer} onChange={handleSelectChange}
                                     >
+                                    <option value="">Select Customer</option>
                                         {customers.map((ele,i)=>{
                                             return <option key={i} value={ele._id}>{ele.name}</option>
                                         })}  
-                                    </TextField>
+                                    </select>
                                     <br/>
                                         <span style={{color:'red'}}>{errorObj.selectCustomer && <span>{errorObj.selectCustomer}</span>}</span>
                                         <br/>
@@ -156,26 +157,23 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                                 {inputList.map((ele,i)=>{
                                 return (
                                     <div key={i}>
-                                        <TextField  style={{  width: '25ch'}}
-                                            select
-                                            label="Select Products"
-                                            value={ele.product} 
-                                            name="product" 
-                                            onChange={(e)=>handleInputChange(e,i)}
-                                         >
+
+                                        <select style={{ width: '25ch'}}
+                                             value={ele.product} 
+                                             name="product"
+                                             onChange={(e)=>handleInputChange(e,i)}
+                                          >
+                                            <option value=""> Select Products </option>
                                             { 
                                                 products.length !==0 && products.map((ele,ind)=>{
-                                                return <option value={ele._id} key={ind}>{ele.name}</option>
+                                                return <option value={ele._id}  key={ind}>{ele.name}</option>
                                            
                                             })}
-                                             
-                                        </TextField>
+                                        </select>
+
                                       <br/>
                                         <span style={{color:'red'}}>{errorObj.product && <span>{errorObj.product}</span> }</span>
                                         <br/>
-                                        {/* <Button onClick={handleIncrement}> +</Button>
-                                         {ele.count}
-                                        <Button onClick={handleDecrement}> -</Button> */}
                                             <input
                                             name="quantity"
                                             placeholder="Enter the Quanity"
@@ -188,10 +186,10 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                                         <div>
                                             {inputList.length !==1 &&
                                             <>
-                                            <Button  color="secondary" onClick={()=>handleRemoveClick(i)}>
-                                                remove
-                                            </Button>
-                                            <br/>
+                                                <Button  color="secondary" onClick={()=>handleRemoveClick(i)}>
+                                                    remove
+                                                </Button>
+                                                <br/>
                                             </>
                                             }
                                             {

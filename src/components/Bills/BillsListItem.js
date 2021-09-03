@@ -6,6 +6,7 @@ import {deleteBillsAction} from '../../actions/billsAction'
 import {TableRow,TableCell,Button,IconButton,Dialog,DialogActions ,DialogTitle,DialogContent,DialogContentText} from '@material-ui/core'
 import ViewListIcon from '@material-ui/icons/ViewList';
 import DeleteIcon from '@material-ui/icons/Delete';
+import moment from 'moment'
 
 const BillsListItems=({srNo,customer,total,date,_id,customers,products,})=>{
     
@@ -40,9 +41,15 @@ const BillsListItems=({srNo,customer,total,date,_id,customers,products,})=>{
 
       const handleClose = () => {
         setOpen(false);
-      };
-    
-     //View Hanlde
+    };
+    //For Parse a Date
+    const getParsedDate=(date)=>{
+        const result=moment.utc(date)
+        const da=result._d.toString()
+        const Index=da.indexOf('G')  
+        const result1= da.slice(0,Index)  
+        return result1
+   }
 
     return (
         <>
@@ -50,7 +57,7 @@ const BillsListItems=({srNo,customer,total,date,_id,customers,products,})=>{
            <TableCell>{srNo}</TableCell> 
            <TableCell>{getCustomer(customer)}</TableCell>
            <TableCell>{total}</TableCell>
-           <TableCell>{date}</TableCell>
+           <TableCell>{getParsedDate(date)}</TableCell>
            <TableCell>
                     <IconButton  onClick={()=>handleClickOpen(_id)} edge="end" aria-label="delete">
                          <ViewListIcon />
@@ -76,10 +83,7 @@ const BillsListItems=({srNo,customer,total,date,_id,customers,products,})=>{
                     
                     </DialogContent>
                     <DialogActions>
-                      <Button variant="contained" color="secondary" onClick={handleClose} color="primary">
-                            Download
-                        </Button>
-                        <Button onClick={handleClose} color="primary" autoFocus>
+                        <Button  color="primary" onClick={handleClose} autoFocus>
                             Go Back
                         </Button>
                     </DialogActions>
