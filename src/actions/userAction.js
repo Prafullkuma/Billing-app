@@ -3,21 +3,23 @@ import axios from "axios"
 
 export  const ACCOUNT_INFO="ACCOUNT_INFO"
 
-export const registerAction=(formData,successMessage,setSavedDetails,moveLink,errorMessage)=>{
+export const registerAction=(formData,successMessage,setSavedDetails,moveLink)=>{
 
     return (dispatch)=>{
            axios.post(`http://dct-billing-app.herokuapp.com/api/users/register`,formData)
            .then((res)=>{
                const result=res.data
-                 if(result.errors){
-                   errorMessage(result.errors) 
-                }  
-                else{
+               if(result.errors){
+                   alert(result.message)
+               }
+               else if(result.errmsg){
+                   alert(result.errmsg)
+               }
+               else{
                     setSavedDetails()
                     successMessage()
-                    moveLink.push('/dashboard')
-                } 
-                                
+                    moveLink.push('/login')
+                }             
            })
            .catch((err)=>{
                console.log(err)

@@ -104,7 +104,7 @@ const AddUser=({formSubmission,handleIsSaved,isSaved})=>{
                 <br/>
 
                 <TextField type="text" 
-                           label="Username" 
+                           label="Email" 
                            color="primary"  
                               
                            name="email" 

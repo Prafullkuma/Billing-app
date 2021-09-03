@@ -29,18 +29,11 @@ const Register=(props)=>{
                 text: 'Successfully registered'
             })
         }
-
-        const errorMessage=(error)=>{
-            Swal.fire({
-                icon:'error',
-                text:error
-            })
-        }
         const setSavedDetails=()=>{
             setIsSaved(true)
         }
         
-        dispatch(registerAction(formData,successMessage,errorMessage,setSavedDetails,props.history))  
+        dispatch(registerAction(formData,successMessage,setSavedDetails,props.history))  
     }
     const handleIsSaved=()=>{
         setIsSaved(!isSaved)

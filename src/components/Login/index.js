@@ -50,10 +50,13 @@ const Login=(props)=>{
                     <Box className={classes.paper}>
                         <h1>LOGIN</h1><br/>
                         <LoginUser formSubmission={formSubmission}/> 
+                    <hr style={{margin:'10px'}}/>
+                    <p style={{color:'black',margin:'10px'}}>Login Details: Email:google@gmail.com and password:googledata</p>
                     </Box>
+
                 </Grid>
+
             </Grid>  
-           
         </div>
     )
 }
