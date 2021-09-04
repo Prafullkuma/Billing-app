@@ -5,6 +5,7 @@ import WebFont from 'webfontloader';
 
 const App=()=>{
     const [isLoggedIn,setIsLoggedIn]=useState(false)
+   
     useEffect(() => {
         WebFont.load({
                 google: {
@@ -12,7 +13,6 @@ const App=()=>{
                 }
         });
     }, []); 
-    
     useEffect(()=>{
         if(localStorage.getItem('token')){
             setIsLoggedIn(!isLoggedIn)

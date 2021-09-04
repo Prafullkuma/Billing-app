@@ -99,11 +99,20 @@ const ProductsList=()=>{
 
       const handleSelectChange=(e)=>{
             const res=e.target.value
-            setOrder(data,res)
-            sortByName(data,res)
-            sortByDescName(data,res)
-            sortByPrice(data,res)
-            sortByPriceDenc(data,res)
+            setOrder(res)
+             
+            if(res==="asc"){
+              sortByName(data,res)
+            }
+            else if(res==="dscn"){
+              sortByDescName(data,res)
+            }
+            else if(res==="priceasc"){
+              sortByPrice(data,res)
+            }
+            else if(res==="pricedscn"){
+             sortByPriceDenc(data,res)
+            }
       }
       return(
             <div>

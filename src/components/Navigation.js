@@ -23,6 +23,8 @@ import PageNotFound from './PageNotFound'
 const Navigation=(props)=>{
     const {handleLoginStatus,isLoggedIn}=props
     const [anchorEl, setAnchorEl] = useState(null);
+    const [profile,setProfile]=useState({})
+
     const dispatch=useDispatch()
 
     const LinkStyle={
@@ -50,6 +52,9 @@ const Navigation=(props)=>{
       const user=useSelector((state)=>{
         return state.user
       })
+      useEffect(()=>{
+        setProfile(user)
+      },[user])
 
     return(
         <div>
@@ -95,10 +100,10 @@ const Navigation=(props)=>{
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                      >
-                    <MenuItem >{user && user.username}</MenuItem>
-                    <MenuItem >{user && user.email}</MenuItem>
-                    <MenuItem >{user && user.businessName}</MenuItem>
-                    <MenuItem>{user && user.address}</MenuItem>
+                    <MenuItem >{profile && profile.username}</MenuItem>
+                    <MenuItem >{profile && profile.email}</MenuItem>
+                    <MenuItem >{profile && profile.businessName}</MenuItem>
+                    <MenuItem>{profile && profile.address}</MenuItem>
                     
                     </Menu> 
             </AppBar>

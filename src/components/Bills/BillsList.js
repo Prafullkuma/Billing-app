@@ -21,7 +21,7 @@ const BillsList=({customers,products})=>{
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    // const [searchTerm,setSearchTerm]=useState('')
+    const [searchTerm,setSearchTerm]=useState('')
 
     const classes = useStyles();
 
@@ -64,27 +64,22 @@ const BillsList=({customers,products})=>{
 
       //Searching 
 
-    //   const handleSearchChange=(e)=>{
-    //         const result=e.target.value
-    //         setSearchTerm(result)
-    //         filterData(result)     
-    //   }
-    //   const filterData=(query)=>{
-    //       const result=customers.filter((ele)=>{
-    //           return ele.name.toLowerCase().includes(query.toLowerCase())
-    //       }).map((ele)=>{
-    //           return ele._id
-    //       })
-
-    //       const gotData=data.filter((e)=>{
-    //             return result.forEach(element => {
-    //                  return e._id===element
-    //             });   
-    //       })
-    //       console.log(gotData)
-          
-    //   }
-     
+      const handleSearchChange=(e)=>{
+            const result=e.target.value
+            setSearchTerm(result)
+            filterData(result)     
+      }
+      const filterData=(query)=>{
+          let finalResult=[]  
+        const result=customers.filter((ele)=>{
+              return ele.name.toLowerCase().includes(query.toLowerCase())
+        })
+        result.forEach((ele)=>{
+            const result=bills.filter((e=>e.customer===ele._id))
+            finalResult=finalResult.concat(result)
+        })
+        setData(finalResult)
+      }
     return(
         <div>
             <TableContainer style={{margin:'20px'}}>
@@ -96,10 +91,9 @@ const BillsList=({customers,products})=>{
                   <option value="">Order By</option>  
                   <option value="asc">Price Asc</option>
                   <option value="desc"> Price Desc</option>
-                </select>  
-                <br/>
+                </select>
 
-                 {/* <input type="text" value={searchTerm} placeholder="Enter name to search" onChange={handleSearchChange}/><br/> */}
+                 <input type="text" value={searchTerm} placeholder="Enter name to search" onChange={handleSearchChange}/><br/>
 
                    <Table className={classes.table}>
                         <TableHead>

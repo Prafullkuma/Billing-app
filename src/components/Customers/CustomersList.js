@@ -36,31 +36,41 @@ const CustomersList=()=>{
          setData([...customers])
      },[customers])
     //Sorting ASC or DESC
+    const sortByAscName=(data,param)=>{
+        const result=data.sort((a,b)=>{
+            const obj1=a["name"].toLowerCase()
+            const obj2=b["name"].toLowerCase()
+            if(param==="asc"){
+                if (obj1 < obj2) {return -1 }
+                if (obj1 > obj2) { return 1 }
+              }
+              return 0
+         })
+         setData(result)
+    } 
+
+    const sortByDescName=(data,param)=>{
+        const result=data.sort((a,b)=>{
+            const obj1=a["name"].toLowerCase()
+            const obj2=b["name"].toLowerCase()
+            if(param==="dscn"){
+                if(obj1 > obj2) { return -1 }
+                if (obj1 < obj2) { return 1 }  
+              }
+              return 0  
+         })
+         setData(result)
+    }
 
     const handleSelectChange=(e)=>{
         const res=e.target.value
         setOrder(res)
-        return customers.sort((a,b)=>{
-            const obj1=a["name"].toLowerCase()
-            const obj2=b["name"].toLowerCase() 
-            if(res==="asc"){
-                if (obj1 < obj2) {
-                    return -1
-                  }
-                  if (obj1 > obj2) {
-                    return 1
-                  }
-                  return 0
-            }else{
-                if(obj1 > obj2) {
-                    return -1
-                  }
-                  if (obj1 < obj2) {
-                    return 1
-                  }
-                  return 0
-              }
-         })
+         if(res==="asc"){
+            sortByAscName(data,res)
+         }
+         else if(res==="dscn"){
+            sortByDescName(data,res)
+         }
     }
 
     // Searching
