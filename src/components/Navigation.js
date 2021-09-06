@@ -21,9 +21,10 @@ import Bills from './Bills'
 import PageNotFound from './PageNotFound'
 
 const Navigation=(props)=>{
-    const {handleLoginStatus,isLoggedIn}=props
+    const {handleLoginStatus}=props
     const [anchorEl, setAnchorEl] = useState(null);
     const [profile,setProfile]=useState({})
+    const localVAr=localStorage.getItem('token') ||  false
 
     const dispatch=useDispatch()
 
@@ -67,7 +68,7 @@ const Navigation=(props)=>{
                 </Typography>
                     <Typography>
                         {
-                            isLoggedIn ?
+                            localVAr ?
                             <>
                              <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                     Profile
@@ -110,7 +111,7 @@ const Navigation=(props)=>{
             <Switch>
                <Route path="/" component={Home} exact/>      
                 {
-                    isLoggedIn ?
+                    localVAr ?
                      <Switch>
                         <Route path="/dashboard" component={DashBoard} exact/> 
                         <Route path="/customers" component={Customers} exact/>
