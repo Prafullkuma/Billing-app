@@ -72,7 +72,7 @@ const Navigation=(props)=>{
                              <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                     Profile
                                 </Button>
-                                <Link  style={LinkStyle} to="/dashboard">Dashboard</Link>    
+                                {/* <Link  style={LinkStyle} to="/dashboard">Dashboard</Link>     */}
                                 <Link style={LinkStyle} to="/customers">Customers</Link>
                                 <Link style={LinkStyle} to="/products">Products</Link> 
                                 <Link style={LinkStyle} to="/bills">Bills</Link>
