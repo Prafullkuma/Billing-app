@@ -135,14 +135,14 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                  <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                     Generate Bill Here
                 </Button>
-                 <Dialog open={open} onClose={handleClose} >
+                 <Dialog open={open} onClose={handleClose} style={{padding:'20px'}}>
                      <DialogTitle id="form-dialog-title"> Add Your Bill</DialogTitle>
                      <DialogContent>
           
                         <Box
                             display="flex"
                             flexWrap="nowrap"
-                            sx={{ maxWidth: 400}}
+                            sx={{ maxWidth: 900}}
                             p={1}
                             m={1}
                         >
@@ -190,20 +190,10 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                                            
                                             })}
                                         </select>
-
                                       <br/>
                                         <span style={{color:'red'}}>{errorObj.product && <span>{errorObj.product}</span> }</span>
+    
                                         <br/>
-                                            <input
-                                            name="quantity"
-                                            placeholder="Enter the Quanity"
-                                            value={ele.quantity}
-                                            onChange={(e)=>handleInputChange(e,i)}   
-                                        />
-                                        <br/>
-                                        <span style={{color:'red'}}>{errorObj.quantity && <span>{errorObj.quantity}</span>}</span>
-                                        <br/>
-                                        <div>
                                             {inputList.length !==1 &&
                                             <>
                                                 <Button  color="secondary" onClick={()=>handleRemoveClick(i)}>
@@ -220,7 +210,7 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                                             }
 
                                         </div>
-                                    </div>
+                                    
                                 ) 
                                 })}
 
@@ -230,7 +220,7 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                                             <Button onClick={handleClose} color="primary">
                                                 Cancel
                                             </Button>
-                                            <Button  variant="outlined" type="submit" color="primary">
+                                            <Button  variant="outlined"  onClick={handleClose} type="submit" color="primary">
                                                    add Bill
                                             </Button> 
                                     </DialogActions>      

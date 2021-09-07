@@ -1,15 +1,11 @@
-import React,{ useState,useEffect} from 'react'
+import React,{useEffect} from 'react'
 
 import {Link, Route,Switch,withRouter  } from 'react-router-dom'
-import { AppBar,Toolbar,Typography, Button} from '@material-ui/core'
-
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-
+import { AppBar,Toolbar,Typography,} from '@material-ui/core'
 import { accoutAction } from '../actions/userAction'
 
 
-import { useDispatch ,useSelector} from 'react-redux'
+import { useDispatch} from 'react-redux'
 
 import Home from './Home'
 import Register from './Register'
@@ -22,8 +18,7 @@ import PageNotFound from './PageNotFound'
 
 const Navigation=(props)=>{
     const {handleLoginStatus}=props
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [profile,setProfile]=useState({})
+
     const localVAr=localStorage.getItem('token') ||  false
 
     const dispatch=useDispatch()
@@ -33,30 +28,13 @@ const Navigation=(props)=>{
         margin:'12px',
         textDecoration:'none',
     }
-      //for Profile
-      const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-      };
-
-      const handleClose = () => {
-        setAnchorEl(null);
-      };
-
-      //Profile
-
       useEffect(()=>{
           if(localStorage.getItem('token')){
             dispatch(accoutAction())
           }
       },[dispatch])
       
-      const user=useSelector((state)=>{
-        return state.user
-      })
-      useEffect(()=>{
-        setProfile(user)
-      },[user])
-
+ 
     return(
         <div>
             <AppBar position="static">
@@ -70,10 +48,7 @@ const Navigation=(props)=>{
                         {
                             localVAr ?
                             <>
-                             <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                                    Profile
-                                </Button>
-                                {/* <Link  style={LinkStyle} to="/dashboard">Dashboard</Link>     */}
+                                <Link  style={LinkStyle} to="/dashboard">Dashboard</Link>    
                                 <Link style={LinkStyle} to="/customers">Customers</Link>
                                 <Link style={LinkStyle} to="/products">Products</Link> 
                                 <Link style={LinkStyle} to="/bills">Bills</Link>
@@ -93,20 +68,6 @@ const Navigation=(props)=>{
                         }
                     </Typography>
                 </Toolbar>            
-                
-                   <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                     >
-                    <MenuItem >{profile && profile.username}</MenuItem>
-                    <MenuItem >{profile && profile.email}</MenuItem>
-                    <MenuItem >{profile && profile.businessName}</MenuItem>
-                    <MenuItem>{profile && profile.address}</MenuItem>
-                    
-                    </Menu> 
             </AppBar>
             <Switch>
                <Route path="/" component={Home} exact/>      

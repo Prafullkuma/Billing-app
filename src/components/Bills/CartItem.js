@@ -16,9 +16,10 @@ const CartItem=({id,product,quantity,products,decrementQuantity,incrementQuantit
         <tr>
             <td>{product.length !==0 && getProduct(product).name}</td>
                 <td>
-                    <button onClick={()=>incrementQuantity(id)}> +</button>
+                    <button  disabled={quantity<=1} onClick={()=>decrementQuantity(id)}>-</button>
                     <span style={{margin:'5px'}}>{  quantity }</span>
-                    <button onClick={()=>decrementQuantity(id)}>-</button>
+                    <button onClick={()=>incrementQuantity(id)}> +</button>
+                   
                 </td>
            </tr>
         </>

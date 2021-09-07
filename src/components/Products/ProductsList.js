@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { TableContainer,Table,TableCell,TextField,TableHead,Box,TableRow,TableBody } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
-import TablePagination from "@material-ui/core/TablePagination";
-
 import { getAllProducts } from '../../actions/productsAction'
 import ProductsListItems from './ProductsListItem'
 
@@ -19,9 +17,6 @@ const ProductsList=()=>{
 
      const [search,setSearch]=useState('')
      const [data,setData]=useState([])
-
-     const [page, setPage] = useState(0);
-     const [rowsPerPage, setRowsPerPage] = useState(5);
      const [order,setOrder]=useState('')
 
      const classes = useStyles();
@@ -39,15 +34,7 @@ const ProductsList=()=>{
         useEffect(()=>{
           setData([...products])
         },[products])
-
-        const handleChangePage = ( newPage) => {
-            setPage(newPage);
-          };
-        
-        const handleChangeRowsPerPage = (event) => {
-            setRowsPerPage(parseInt(event.target.value, 10));
-            setPage(0);
-        };
+       
         //Search
       const handleChange=(e)=>{
           const inputValue=e.target.value
@@ -151,8 +138,7 @@ const ProductsList=()=>{
                                 </TableHead>
                                 <TableBody>
                                 {     
-                                      data
-                                        .slice(page * rowsPerPage,page* rowsPerPage +rowsPerPage )
+                                       data
                                         .map((ele,i)=>{
                                         return <ProductsListItems key={ele._id} {...ele} srNo={i+1} />
                                       })
@@ -160,15 +146,7 @@ const ProductsList=()=>{
                                 </TableBody>
                             </Table>
 
-                            <TablePagination
-                                rowsPerPageOptions={[5, 10, 25]}
-                                component="div"
-                                count={data.length}
-                                page={page}
-                                onPageChange={handleChangePage}
-                                rowsPerPage={rowsPerPage}
-                                onRowsPerPageChange={handleChangeRowsPerPage}
-                            />
+                            
                         </TableContainer>
 
                     </div>

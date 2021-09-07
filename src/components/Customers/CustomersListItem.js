@@ -65,7 +65,7 @@ const CustomersListItem=({_id ,srNo,name:Ename,mobile:Emobile,email:Eemail,creat
     }
     // delete Handle
     const deleteHandle=(_id)=>{
-        const sure=window.confirm("Are you sure")
+        const sure=window.confirm("Most commonly Customer are not deleted")
             if(sure){
                     dispatch(deleteCustomerAction(_id))
             }
@@ -75,6 +75,7 @@ const CustomersListItem=({_id ,srNo,name:Ename,mobile:Emobile,email:Eemail,creat
         setOpen(true);
      }      
      const handleClose = () => {
+         setErrorObj({})
         setOpen(false);
      };
       const handleChange=(e)=>{
@@ -89,9 +90,11 @@ const CustomersListItem=({_id ,srNo,name:Ename,mobile:Emobile,email:Eemail,creat
         }
       }
       const runValidator=()=>{
+
         if(name.length===0){
             errors.name="Name can't be blank"
         }
+
         if(mobile.length===0){
             errors.mobile="Mobile can't be blank"
         }
@@ -115,9 +118,12 @@ const CustomersListItem=({_id ,srNo,name:Ename,mobile:Emobile,email:Eemail,creat
                 name:name,
                 mobile:mobile,
                 email:email
-            }
-                dispatch(editCustomerAction(formData,_id))
+          }
+        
+          dispatch(editCustomerAction(formData,_id))
+        
         }else{
+            console.log("error Object",errors)
             setErrorObj(errors)
         }
     }
@@ -133,11 +139,9 @@ const CustomersListItem=({_id ,srNo,name:Ename,mobile:Emobile,email:Eemail,creat
              <TableCell>
                          <IconButton edge="end"  onClick={handleOpen} aria-label="view">
                                         <EditIcon title="Edit" />
-                            </IconButton>                       
-               
+                        </IconButton>                       
              </TableCell>
                   <TableCell>
-                      
                             <IconButton edge="end"  onClick={()=>deleteHandle(_id)} aria-label="delete">
                                     <DeleteIcon title="Delete" />
                             </IconButton>
@@ -161,23 +165,23 @@ const CustomersListItem=({_id ,srNo,name:Ename,mobile:Emobile,email:Eemail,creat
 
                     <form onSubmit={handleSubmit} className={classes.root}>
                         <TextField type="text" label="Name" name="name" placeholder="Enter name" value={name} onChange={handleChange}/><br/>
-                        <span>{errorObj.name && <span>{errorObj.name}</span>}</span>
+                        <span>{errorObj.name && <span style={{color:'red'}}>{errorObj.name}</span>}</span>
                         <br/>
                         <TextField type="text" label="Mobile" name="mobile" placeholder="Enter mobile" value={mobile} onChange={handleChange}/>
                         <br/>
-                        <span>{errorObj.mobile && <span>{errorObj.mobile}</span>}</span>
+                        <span>{errorObj.mobile && <span style={{color:'red'}}>{errorObj.mobile}</span>}</span>
                  
                         <br/>
                          <TextField type="text" label="Email" name="email" placeholder="Enter email" value={email} onChange={handleChange}/>
                          <br/>
-                         <span>{errorObj.email && <span>{errorObj.email}</span>}</span>
-                 
+                         <span>{errorObj.email && <span style={{color:'red'}}>{errorObj.email}</span>}</span>
+
                         <br/>
                         <DialogActions>
                             <Button autoFocus onClick={handleClose} color="primary">
                                 Cancel
                             </Button>
-                            <Button type="submit" onClick={handleClose}  color="primary">
+                            <Button type="submit" onClick={handleClose} color="primary">
                                 Edit
                             </Button>
                         </DialogActions>

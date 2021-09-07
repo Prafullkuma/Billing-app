@@ -15,7 +15,6 @@ const AddBill=({customers,products})=>{
        }  
        dispatch(addBillsAction(formData,formSaved))  
     }
-
     const resetForm=()=>{
         setIsSaved(!isSaved)
     }

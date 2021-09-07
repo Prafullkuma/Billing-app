@@ -71,6 +71,7 @@ export const editCustomerAction=(formData,_id)=>{
             const result=res.data
             console.log(result)
             dispatch({type:EDIT_CUSTOMER,payload:{ formData:formData, _id:_id}})
+         
         })
         .catch((err)=>{
             alert(err.message)

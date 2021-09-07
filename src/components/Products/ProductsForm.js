@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import { DialogActions, TextField,Button ,Dialog,DialogContentText} from '@material-ui/core'
-import { Typography } from '@material-ui/core';
+
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -70,11 +70,14 @@ const ProdcutsForm=({formSubmission,toggleStatus,isSaved})=>{
              <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                     Add Product
              </Button>
+            
              <Dialog  open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                         
+            
                     <form onSubmit={handleSubmit} style={{margin:'40px'}} className={classes.root}>
-                        <DialogContentText >
-                            <Typography color="black" variant="h5">Add your products </Typography>
-                        </DialogContentText >
+                       <DialogContentText color="primary">
+                             Add your products
+                         </DialogContentText>
                         
                         <TextField label="Name" className={classes.margin} margin="dense" fullWidth type="text" placeholder="Enter produt name" value={name} onChange={(e)=>setName(e.target.value)}/><br/>
                         <span>{errorObj.name && <span style={{color:'red'}}>{errorObj.name}</span>}</span>
@@ -88,7 +91,7 @@ const ProdcutsForm=({formSubmission,toggleStatus,isSaved})=>{
                             Cancel
                         </Button>
 
-                        <Button variant="contained" color="secondary"  type="submit">Add Product</Button>
+                        <Button variant="contained" onClick={handleClose} color="secondary"  type="submit">Add Product</Button>
                     </DialogActions>
                     </form>
             </Dialog>

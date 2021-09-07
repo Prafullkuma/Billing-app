@@ -2,7 +2,7 @@ import React, { useEffect ,useState} from 'react'
 import BillsListItems from './BillsListItem'
 import {getAllBillsAction} from '../../actions/billsAction'
 import { useDispatch ,useSelector} from 'react-redux'
-import { Table,TableContainer,TablePagination,TableHead,TableRow,TableBody,TableCell} from '@material-ui/core'
+import { Table,TableContainer,TableHead,TableRow,TableBody,TableCell} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -18,8 +18,6 @@ const BillsList=({customers,products})=>{
     const [data,setData]=useState([])
     const [selectTerm,setSelectTerm]=useState('')
 
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const [searchTerm,setSearchTerm]=useState('')
 
@@ -52,15 +50,6 @@ const BillsList=({customers,products})=>{
             setData(result)
         }
     }
-    //Pagination
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-      };
-    
-      const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-      };    
 
       //Searching 
 
@@ -80,6 +69,7 @@ const BillsList=({customers,products})=>{
         })
         setData(finalResult)
       }
+      
     return(
         <div>
             <TableContainer style={{margin:'20px'}}>
@@ -110,24 +100,16 @@ const BillsList=({customers,products})=>{
                         <TableBody>
                                 {
                                     data
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((ele,i)=>{
                                             return <BillsListItems key={i} {...ele} srNo={i+1} customers={customers} products={products}/>
-                                    })                 
-                                }    
+                                    })     
+                                }   
+                              
                         </TableBody>
                 </Table>  
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 15]}
-                    component="div"
-                    count={data.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
+              
 
-            
+
           </TableContainer> 
           
              
