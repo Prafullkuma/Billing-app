@@ -7,7 +7,7 @@ export const EDIT_PRODUCT="EDIT_PRODUCT"
 export const addProductsAction=(formData,successMessage,setResetFormHandle)=>{
 
     return (dispatch)=>{
-        axios.post(`http://dct-billing-app.herokuapp.com/api/products`,formData,{
+        axios.post(`https://dct-billing-app.herokuapp.com/api/products`,formData,{
             headers:{
                 'Authorization':localStorage.getItem('token')
             }
@@ -27,7 +27,7 @@ export const addProductsAction=(formData,successMessage,setResetFormHandle)=>{
 }
 export const getAllProducts=()=>{
      return (dispatch)=>{
-        axios.get(`http://dct-billing-app.herokuapp.com/api/products`,{
+        axios.get(`https://dct-billing-app.herokuapp.com/api/products`,{
             headers:{
                 'Authorization':localStorage.getItem('token') 
             }
@@ -46,7 +46,7 @@ export const getAllProducts=()=>{
 
 export const deleteProductAction=(_id)=>{
     return (dispatch)=>{
-         axios.delete(`http://dct-billing-app.herokuapp.com/api/products/${_id}`,{
+         axios.delete(`https://dct-billing-app.herokuapp.com/api/products/${_id}`,{
              headers:{
                 'Authorization':localStorage.getItem('token') 
              }
@@ -65,7 +65,7 @@ export const deleteProductAction=(_id)=>{
 }
 export const editProductAction=(formData,_id)=>{
      return (dispatch)=>{
-         axios.put(`http://dct-billing-app.herokuapp.com/api/products/${_id}`,formData,{
+         axios.put(`https://dct-billing-app.herokuapp.com/api/products/${_id}`,formData,{
              headers:{ 
                 'Authorization':localStorage.getItem('token') 
              }

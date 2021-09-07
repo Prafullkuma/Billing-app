@@ -6,7 +6,7 @@ export  const ACCOUNT_INFO="ACCOUNT_INFO"
 export const registerAction=(formData,successMessage,setSavedDetails,moveLink)=>{
 
     return (dispatch)=>{
-           axios.post(`http://dct-billing-app.herokuapp.com/api/users/register`,formData)
+           axios.post(`https://dct-billing-app.herokuapp.com/api/users/register`,formData)
            .then((res)=>{
                const result=res.data
                if(result.errors){
@@ -30,7 +30,7 @@ export const registerAction=(formData,successMessage,setSavedDetails,moveLink)=>
 export const loginAction=(formData,moveLink,successMessage,errorMessage,handleLoginStatus)=>{
    
     return (dispatch)=>{
-        axios.post(`http://dct-billing-app.herokuapp.com/api/users/login`,formData)
+        axios.post(`https://dct-billing-app.herokuapp.com/api/users/login`,formData)
         .then((res)=>{
             const result=res.data
 
@@ -54,7 +54,7 @@ export const accoutAction=()=>{
 
     return (dispatch)=>{
 
-        axios.get(`http://dct-billing-app.herokuapp.com/api/users/account`,{
+        axios.get(`https://dct-billing-app.herokuapp.com/api/users/account`,{
             headers:{
                  'Authorization':localStorage.getItem('token')
                }

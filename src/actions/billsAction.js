@@ -6,7 +6,7 @@ export const DELETE_BILL="DELETE_BILL"
 export const addBillsAction=(formData,addBillsAction)=>{
     
     return (dispatch)=>{
-        axios.post(`http://dct-billing-app.herokuapp.com/api/bills`,formData,{
+        axios.post(`https://dct-billing-app.herokuapp.com/api/bills`,formData,{
             headers:{
                 'Authorization':localStorage.getItem('token')
             }
@@ -23,7 +23,7 @@ export const addBillsAction=(formData,addBillsAction)=>{
 }
 export const getAllBillsAction=()=>{
     return (dispatch)=>{
-        axios.get(`http://dct-billing-app.herokuapp.com/api/bills`,{
+        axios.get(`https://dct-billing-app.herokuapp.com/api/bills`,{
             headers:{
                 'Authorization':localStorage.getItem('token')
             }
@@ -41,7 +41,7 @@ export const getAllBillsAction=()=>{
 }
 export const deleteBillsAction=(_id)=>{
     return (dispatch)=>{
-        axios.delete(`http://dct-billing-app.herokuapp.com/api/bills/${_id}`,{
+        axios.delete(`https://dct-billing-app.herokuapp.com/api/bills/${_id}`,{
             headers:{
                 'Authorization':localStorage.getItem('token') 
             }
