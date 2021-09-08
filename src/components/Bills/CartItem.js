@@ -1,27 +1,22 @@
 import React from 'react'
 
-const CartItem=({id,product,quantity,products,decrementQuantity,incrementQuantity})=>{
+const CartItem=({quantity,product,products})=>{
 
 
     const getProduct=()=>{
         if(product.length!==0){
            const result=products.find((ele)=>{
                return ele._id===product
-           }) 
-           return result
+           })
+           console.log("gotVAlues",result.name) 
+           return result.name
         }
     }
+
     return(
         <>
-        <tr>
-            <td>{product.length !==0 && getProduct(product).name}</td>
-                <td>
-                    <button  disabled={quantity<=1} onClick={()=>decrementQuantity(id)}>-</button>
-                    <span style={{margin:'5px'}}>{  quantity }</span>
-                    <button onClick={()=>incrementQuantity(id)}> +</button>
-                   
-                </td>
-           </tr>
+
+            <li>{quantity} -{getProduct(product)}</li>
         </>
     )
 }

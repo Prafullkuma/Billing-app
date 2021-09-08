@@ -74,9 +74,9 @@ const Navigation=(props)=>{
                 {
                     localVAr ?
                      <Switch>
-                        <Route path="/dashboard" component={DashBoard} exact/> 
+                        {/* <Route path="/dashboard" component={DashBoard} exact/> 
                         <Route path="/customers" component={Customers} exact/>
-                        <Route path="/products" component={Products} exact/> 
+                        <Route path="/products" component={Products} exact/>  */}
                         <Route path="/bills" component={Bills} exact/>
                         <Route component={PageNotFound} />
                     </Switch>
