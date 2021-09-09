@@ -76,8 +76,8 @@ const Navigation=(props)=>{
                      <Switch>
                         <Route path="/dashboard" component={DashBoard} exact/> 
                         <Route path="/customers" component={Customers} exact/>
-                        <Route path="/products" render={(props)=><Products {...props}/> } exact/> 
-                        <Route path="/bills" component={Bills} exact/>
+                        <Route path="/products" render={(props)=><Products {...props}/> } exact/>
+                        <Route path="/bills" component={Bills} exact/> 
                         <Route component={PageNotFound} />
                     </Switch>
                     :

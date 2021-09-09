@@ -5,16 +5,17 @@ import {allCustomerListAction} from '../../actions/customersAction'
 import {getAllProducts} from '../../actions/productsAction'
 import {getAllBillsAction} from '../../actions/billsAction'
 import {Container} from '@material-ui/core'
-import ContentOfTable from './ContentOfTable'
 
 
 import { makeStyles } from '@material-ui/core/styles';
 import Profile from './Profile'
 import HeaderList from './HeaderList'
+import TabsComponent from './TabsComponent'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    marginLeft:'30px'
   },
   paper: {
     padding: theme.spacing(2),
@@ -57,21 +58,26 @@ const DashBoard=()=>{
         return sum
       }
 
-
+   
     return(
         <div className={classes.root} >
           <br/>
           <Profile  profile={profile}/>  
           <br/>
-            <Container maxWidth="lg" style={{marginTop:'50px'}}>
+             <Container maxWidth="lg" style={{marginTop:'50px'}}>
               <HeaderList totalAmount={totalAmount} 
                     allCustomers={allCustomers}
                     allBills={allBills}
                     allProducts={allProducts}
                     classes={classes}
               />
-              <ContentOfTable allCustomers={allCustomers} /> 
-
+              <TabsComponent 
+                   allCustomers={allCustomers}
+                   allBills={allBills}
+                   allProducts={allProducts}
+              />
+              
+             
           </Container>
         </div>
     )
