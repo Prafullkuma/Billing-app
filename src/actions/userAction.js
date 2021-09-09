@@ -13,7 +13,7 @@ export const registerAction=(formData,successMessage,setSavedDetails,moveLink)=>
                    alert(result.message)
                }
                else if(result.errmsg){
-                   alert(result.errmsg)
+                   alert("Email or Username is already taken")
                }
                else{
                     setSavedDetails()

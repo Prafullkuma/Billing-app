@@ -54,7 +54,7 @@ const LoginUser=({formSubmission })=>{
             <form onSubmit={submitHandle}>
                 <TextField label="Email" 
                            color="primary" 
-                           type="text" 
+                           type="email" 
                            name="email" 
                            value={email} 
                            onChange={handleChange} 
@@ -64,7 +64,7 @@ const LoginUser=({formSubmission })=>{
                 <br/>
                 <TextField label="Password" 
                            color="primary"
-                           type="text" 
+                           type="password" 
                            name="password" 
                            value={password} 
                            onChange={handleChange} 

@@ -11,6 +11,7 @@ const CartItem=({id,quantity,product,products,decrementQuantity,incrementQuantit
            return result
        }
      }
+
      const handleIncrement=(id)=>{
         incrementQuantity(id)
      }
@@ -38,7 +39,6 @@ const CartItem=({id,quantity,product,products,decrementQuantity,incrementQuantit
                             <Button onClick={()=>removeHandle(id)}>Remove</Button>
                     </TableCell>
             </TableRow>
-
         </>
       )
 }

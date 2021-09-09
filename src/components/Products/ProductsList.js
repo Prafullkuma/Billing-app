@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { TableContainer,Table,TableCell,TablePagination,TextField,TableHead,Grid,TableRow,TableBody,Paper } from '@material-ui/core'
+import { TableContainer,Table,TableCell,TextField,TableHead,Grid,TableRow,TableBody,Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { getAllProducts } from '../../actions/productsAction'
 import ProductsListItems from './ProductsListItem'
@@ -166,9 +166,7 @@ const ProductsList=()=>{
                                 </TableBody>
                             </Table>
                         </TableContainer>
-
                     </div>
-                
                 }
             </div>
         )

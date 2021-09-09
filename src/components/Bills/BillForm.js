@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import CartItem from './CartItem'
 import Select from 'react-select'
 import {TableRow,TableCell,TableBody} from '@material-ui/core'
-
+import DownloadBill from './DownloadBill'
 
 
 
@@ -18,6 +18,8 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
     const [filteredCustomer,setFilteredCustomer]=useState([])
     const [filteredProducts,setFilteredProducts]=useState([])
     const [selectedValue, setSelectedValue] = useState([]);
+
+    const [isAddedToCart,setIsAddedToCart]=useState(false)
 
     const [errorObj,setErrorObj]=useState({})
     
@@ -74,11 +76,13 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
 
         // forAdding lineItems
           const addIitem=(items)=>{
-                const result=items.map((ele)=>{
+               
+               const result=items.map((ele)=>{
                     return {id:uuidv4(),product:ele,quantity:"1"}
                 })
               const data=[...result,...lineItems]
               setLineItems(data)  
+              setIsAddedToCart(true)
               setSelectedValue([])
           }
           //Increment
@@ -117,6 +121,10 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
          }
          if(selectCustomer.length===0){
              errors.selectCustomer="Your not preset User"
+         }
+
+         if(selectedValue.length===0 && lineItems.length===0){
+                errors.multipleProducts="Produts list is empty"
          }
 
        }
@@ -158,7 +166,7 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
           }
     return(
         <div >
-                 <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                     Generate Bill Here
                 </Button>
                  <Dialog fullWidth={true} maxWidth={'md'}   open={open} onClose={handleClose} style={{padding:'20px'}}>
@@ -201,6 +209,7 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                                                 isMulti
                                                 className="dropdown"
                                         />  
+                                        <span>{errorObj.multipleProducts && <span style={{color:'red'}}>{errorObj.multipleProducts}</span>}</span>
                                         <br/>
                                         <div>
                                             <Button variant="contained" color="primary" onClick={()=>addIitem(selectedValue)}>Add Items </Button>
@@ -223,10 +232,9 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                             <TableContainer>
                                  {
                                   lineItems.length===0 ?
-                                    <h3 style={{ margin:'20px',color:'red'}}>Cart items are Empty</h3>
+
+                                    <img style={{height:'400px',textAlign:'center',width:'400px',objectFit:'contain'}} src={`https://image.freepik.com/free-vector/add-cart-concept-illustration_114360-1435.jpg`} alt="No Carts Items"/>    
                                 :<>
-                                 { selectCustomer && <h4> Name:{selectCustomer.label}</h4>}
-                                
                                   <Table>
                                   <TableHead>
                                           <TableRow>
@@ -244,10 +252,16 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                                           }
                                       </TableBody>
                                   </Table>
+
+                                 {isAddedToCart &&(
+                                         <>
+                                           <DownloadBill customerName={selectCustomer.label} myDate={myDate} lineItems={lineItems} customers={customers} products={products}/>  
+                                        </>
+                                  )}   
                                  </>
                                 }
                             </TableContainer>
-                    </Box>
+                      </Box>
                      </DialogContent>     
                  </Dialog>
         </div>

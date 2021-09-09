@@ -4,11 +4,13 @@ import {useDispatch, useSelector} from 'react-redux'
 import {allCustomerListAction} from '../../actions/customersAction'
 import {getAllProducts} from '../../actions/productsAction'
 import {getAllBillsAction} from '../../actions/billsAction'
-import {Grid,Paper,Container} from '@material-ui/core'
+import {Container} from '@material-ui/core'
+import ContentOfTable from './ContentOfTable'
 
 
 import { makeStyles } from '@material-ui/core/styles';
 import Profile from './Profile'
+import HeaderList from './HeaderList'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,32 +64,14 @@ const DashBoard=()=>{
           <Profile  profile={profile}/>  
           <br/>
             <Container maxWidth="lg" style={{marginTop:'50px'}}>
-                <Grid container>
-                      <Grid item xs={3} sm={3} >
-                        <Paper className={classes.paper}>
-                        <h1>Customers</h1>  <br/><br/>
-                           <h3> {allCustomers.length}</h3>
-                          </Paper>
-                      </Grid>
-                      <Grid item xs={3} sm={3}>
-                        <Paper className={classes.paper}>
-                        <h1>Products</h1> <br/> <br/>
-                           <h3>{allProducts.length}</h3> 
-                        </Paper>
-                      </Grid>
-                      <Grid item xs={3} sm={3}>
-                        <Paper className={classes.paper}>
-                         <h1>Bills</h1> <br/><br/>
-                          <h3>{allBills.length}</h3>
-                        </Paper>
-                      </Grid>
-                      <Grid item xs={3} sm={3}>
-                        <Paper className={classes.paper}>
-                        <h1>Amount</h1> <br/><br/>
-                          <h3>{totalAmount()}</h3>
-                        </Paper>
-                      </Grid>
-                </Grid>
+              <HeaderList totalAmount={totalAmount} 
+                    allCustomers={allCustomers}
+                    allBills={allBills}
+                    allProducts={allProducts}
+                    classes={classes}
+              />
+              <ContentOfTable allCustomers={allCustomers} /> 
+
           </Container>
         </div>
     )

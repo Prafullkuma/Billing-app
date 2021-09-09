@@ -103,7 +103,7 @@ const AddUser=({formSubmission,handleIsSaved,isSaved})=>{
                 <span>{errorObj.username && <span style={{color:'red'}}>{errorObj.username}</span>}</span>
                 <br/>
 
-                <TextField type="text" 
+                <TextField type="email" 
                            label="Email" 
                            color="primary"  
                               
@@ -114,7 +114,7 @@ const AddUser=({formSubmission,handleIsSaved,isSaved})=>{
                 <span>{errorObj.email && <span style={{color:'red'}}>{errorObj.email}</span>}</span>
                
                 <br/>
-                <TextField type="text" 
+                <TextField type="password" 
                            label="Password" 
                            color="primary"
                            name="password" 
