@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { TableContainer,Table,TableCell,TextField,TableHead,Box,TableRow,TableBody } from '@material-ui/core'
+import { TableContainer,Table,TableCell,TablePagination,TextField,TableHead,Grid,TableRow,TableBody,Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { getAllProducts } from '../../actions/productsAction'
 import ProductsListItems from './ProductsListItem'
-
+import Select from 'react-select'
 
 
 const useStyles = makeStyles({
@@ -18,7 +18,7 @@ const ProductsList=()=>{
      const [search,setSearch]=useState('')
      const [data,setData]=useState([])
      const [order,setOrder]=useState('')
-
+     
      const classes = useStyles();
 
      const dispatch=useDispatch()
@@ -84,10 +84,9 @@ const ProductsList=()=>{
         setData(result)
      }
 
-      const handleSelectChange=(e)=>{
-            const res=e.target.value
-            setOrder(res)
-             
+      const handleSelectChange=(item)=>{
+            const res=item.value
+            setOrder(res)             
             if(res==="asc"){
               sortByName(data,res)
             }
@@ -101,20 +100,41 @@ const ProductsList=()=>{
              sortByPriceDenc(data,res)
             }
       }
+
+      const options=[
+        {value:"asc",label:'Order ASC'},
+        {value:'dscn',label:'Order DSCN'},
+        {value:'priceasc',label:'Price ASC'},
+        {value:"pricedscn",label:'price DSCN'}
+      ]
+      
       return(
             <div>
-                <h1>Total Products-{data.length}</h1>
+                <Paper style={{textAlign:'center'}}>
+                  <h1>Total Products-{data.length}</h1>
+                  <br/>
+                </Paper>
+                <br/>
                  <label id="order">Order By</label>
-                  <select htmlFor="order" style={{margin:'20px'}}  value={order} onChange={handleSelectChange}>
-                      <option value="">Select Option</option>
-                    <option value="asc">Order ASC</option>
-                    <option value="dscn">Order DSCN</option>
-                    <option value="priceasc">Price ASC</option>
-                    <option value="pricedscn"> price DSCN </option>
-                </select>
-
-                <TextField label="Search" placeholder="Enter Term to search" type="text" value={search} onChange={handleChange}/>
+                 
+                 <Grid container spacing={3}>
+                      <Grid item xs={6}> 
+                          <Select
+                              placeholder="Select to sort"
+                              options={options}
+                              value={order}
+                              onChange={handleSelectChange}   
+                          />
+                      </Grid>
+                      <Grid item xs={6}>
+                          <TextField 
+                            placeholder="Enter Term to search"
+                           type="text" 
+                           value={search} 
+                           onChange={handleChange}/>
     
+                      </Grid>
+                 </Grid>
 
                   { 
                     products.length===0 ?
@@ -123,13 +143,13 @@ const ProductsList=()=>{
                     </>
                     :
                     <div style={{margin:'30px'}}>
-                        <TableContainer component={Box} item="true" xs={9} >
+                        <TableContainer component={Paper} item="true" xs={9} >
                             
 
                         <Table className={classes.table} >
                                 <TableHead>
                                       <TableRow>
-                                            <TableCell>sr No</TableCell>
+                                            <TableCell>Sr.No</TableCell>
                                             <TableCell >Product Name</TableCell>
                                             <TableCell >Product Price</TableCell>
                                             <TableCell >Edit</TableCell>
@@ -139,14 +159,12 @@ const ProductsList=()=>{
                                 <TableBody>
                                 {     
                                        data
-                                        .map((ele,i)=>{
+                                       .map((ele,i)=>{
                                         return <ProductsListItems key={ele._id} {...ele} srNo={i+1} />
                                       })
                                 }
                                 </TableBody>
                             </Table>
-
-                            
                         </TableContainer>
 
                     </div>

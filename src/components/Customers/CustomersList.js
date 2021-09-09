@@ -1,10 +1,11 @@
 import React, { useEffect ,useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
-import {TextField ,TableContainer,Table,TableRow,TableBody,Box, TableCell, TableHead}  from '@material-ui/core'
+import {TextField ,TablePagination,TableContainer,Paper,Table,TableRow,TableBody,Box, TableCell, TableHead, Grid}  from '@material-ui/core'
 
 import CustomersListItem from './CustomersListItem' 
 import {allCustomerListAction} from '../../actions/customersAction'
+import Select from 'react-select'
 
 const useStyles = makeStyles({
     table: {
@@ -17,6 +18,9 @@ const CustomersList=()=>{
     const [order,setOrder]=useState('')    
     const [search,setSearch]=useState('')
     const [data,setData]=useState([])
+
+    const [page,setPage]=useState(0)
+    const [rowsPerPage,setRowsPerPage]=useState(5)
 
     const dispatch=useDispatch()
     const classes = useStyles();
@@ -58,8 +62,8 @@ const CustomersList=()=>{
          setData(result)
     }
 
-    const handleSelectChange=(e)=>{
-        const res=e.target.value
+    const handleSelectChange=(item)=>{
+        const res=item.value
         setOrder(res)
          if(res==="asc"){
             sortByAscName(data,res)
@@ -82,18 +86,40 @@ const CustomersList=()=>{
     }   
 
      
-    
-    return(
-        <div> 
-            <h1>Total Customer-{data.length}</h1>
-            <label id="order">Order By</label>
-            <select  htmlFor="order" style={{margin:'20px'}} value={order} onChange={handleSelectChange}>
-                <option value="">Select Option</option>
-                <option value="asc">Order ASC</option>
-                <option value="dscn">Order DSCN</option>
-            </select>
+    const options=[
+        { value:"asc", label:"Order ASC"},
+        { value:"dscn",label:"Order DSCE"}
+    ]
+    //Pagination
+        const handleChangeRowsPerPage = (event) => {
+            setRowsPerPage(parseInt(event.target.value, 10));
+            setPage(0);
+        };
 
-            <TextField label="Search" placeholder="Enter Term to search" type="text" value={search} onChange={handleSeachChange} />
+        const handleChangePage = (event, newPage) => {
+            setPage(newPage);
+        };
+
+    return(
+        <div  style={{marginLeft:'50px'}}> 
+      
+                <Paper style={{textAlign:'center'}}>
+                   <h1>Total Customer-{data.length}</h1>
+                    <br/>
+                </Paper>
+            <label id="order">Order By</label>
+            <Grid container spacing={3}>
+                <Grid item xs={6}  >
+                    <Select
+                        options={options}
+                        value={order}
+                        onChange={handleSelectChange}
+                    />
+                </Grid>  
+                  <Grid item xs={6}>
+                    <TextField  placeholder="Enter Term to search" type="text" value={search} onChange={handleSeachChange} />
+                  </Grid>   
+            </Grid>
             <br/>
             {
                 customers.length===0 ?
@@ -107,7 +133,7 @@ const CustomersList=()=>{
                         <Table className={classes.table}>
                         <TableHead>
                                 <TableRow>
-                                    <TableCell component="th">Sr No</TableCell>
+                                    <TableCell component="th">Sr.No</TableCell>
                                     <TableCell>Name</TableCell>
                                     <TableCell>Email</TableCell>
                                     <TableCell>Phone</TableCell>
@@ -119,15 +145,23 @@ const CustomersList=()=>{
                             <TableBody>
                             {  
                                         data
+                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)                
                                         .map((ele,i)=>{
                                         return <CustomersListItem key={ele._id} {...ele} srNo={i+1}/>
                                         })
                             }
                         </TableBody>
                         </Table>
-
-
-                        </TableContainer>
+                            <TablePagination
+                                rowsPerPageOptions={[5, 10, 25]}
+                                component="div"
+                                count={data.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                           />
+                </TableContainer>
                 </>
 
           } 

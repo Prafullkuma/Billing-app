@@ -3,7 +3,7 @@ export const  ADD_BILL="ADD_BILL"
 export const  ALL_BILLS="ALL_BILLS"
 export const DELETE_BILL="DELETE_BILL"
 
-export const addBillsAction=(formData,addBillsAction)=>{
+export const addBillsAction=(formData,addBillsAction,successMessage)=>{
     
     return (dispatch)=>{
         axios.post(`https://dct-billing-app.herokuapp.com/api/bills`,formData,{
@@ -15,6 +15,7 @@ export const addBillsAction=(formData,addBillsAction)=>{
             const result=res.data
             dispatch({type:ADD_BILL,payload:result})
             addBillsAction()
+            successMessage()
         })
         .catch((err)=>{
             alert(err.message)

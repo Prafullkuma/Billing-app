@@ -4,6 +4,9 @@ import {Button,Dialog,DialogTitle,Input,TableContainer,Table,TableHead,FormContr
 import { useSelector } from 'react-redux'
 import CartItem from './CartItem'
 import Select from 'react-select'
+import {TableRow,TableCell,TableBody} from '@material-ui/core'
+
+
 
 
 const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
@@ -17,10 +20,11 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
     const [selectedValue, setSelectedValue] = useState([]);
 
     const [errorObj,setErrorObj]=useState({})
-
+    
     const user=useSelector((state)=>{
         return state.user
     })
+
     //modal    
     const [open, setOpen] = useState(false);
 
@@ -28,10 +32,10 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
     useEffect(()=>{
         if(isSaved){
             setMyDate('')
+            setLineItems([])
             setSelectCustomer('') 
             resetForm()
         }
-    
     },[isSaved,resetForm])
 
        //for errors
@@ -42,7 +46,6 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
             const result=e.target.value
             setMyDate(result)
         }
-
         //Genarate Data for Customer
         const handleChange=(item)=>{
             setSelectCustomer(item)
@@ -60,24 +63,52 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
             const result=e.map((ele)=>{
                 return ele.value || []
             })
-            console.log("value found",result)
             setSelectedValue(result)
         }
         useEffect(()=>{
             const result=products.map((ele)=>{
-                return {value:ele._id,label:ele.name}
+                return {value:ele._id,label:ele.name} // start from here
             })
             setFilteredProducts(result)
-        },[products])
-       
+        },[products])   
+
         // forAdding lineItems
           const addIitem=(items)=>{
                 const result=items.map((ele)=>{
                     return {id:uuidv4(),product:ele,quantity:"1"}
                 })
-              setLineItems(result)  
+              const data=[...result,...lineItems]
+              setLineItems(data)  
+              setSelectedValue([])
           }
-        
+          //Increment
+          const incrementQuantity=(id)=>{
+
+            const result=lineItems.map((ele)=>{
+                if(ele.id===id){
+                    return {...ele,quantity:Number(ele.quantity)+1}
+                }else{
+                    return {...ele}
+                }
+            })
+            setLineItems(result)
+          }
+          const decrementQuantity=(id)=>{
+            const result=lineItems.map((ele)=>{
+                if(ele.id===id){
+                    return {...ele,quantity:Number(ele.quantity)-1}
+                }else{
+                    return {...ele}
+                }
+            })
+            setLineItems(result)
+          } 
+          const removeItem=(id)=>{
+              const result=lineItems.filter((ele)=>{
+                  return ele.id !==id
+              })
+              setLineItems(result)
+          }
        //validation
 
        const runValidator=()=>{
@@ -87,8 +118,8 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
          if(selectCustomer.length===0){
              errors.selectCustomer="Your not preset User"
          }
-       }
 
+       }
        //formSubmit
        const handleSubmit=(e)=>{
             e.preventDefault()
@@ -98,12 +129,12 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                 setErrorObj({})
                 const formData={
                     date: myDate,
-                    customer:selectCustomer,
+                    customer:selectCustomer.value,
                     lineItems:lineItems,
                     user:user !== undefined && user._id
                 }
-              console.log("final result",formData)
-                // formSubmission(formData)
+                // console.log("Got result",formData)
+               formSubmission(formData)
             }else{
                 setErrorObj(errors)
             }
@@ -117,25 +148,29 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
             setOpen(false);
             setErrorObj({})
         };
-
+        
+        const handleReset=()=>{
+            setMyDate('')
+            setLineItems([])
+            setSelectCustomer('')
+            setErrorObj({})
+            setSelectedValue([])
+          }
     return(
-        <div>
+        <div >
                  <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                     Generate Bill Here
                 </Button>
-
-                 <Dialog open={open} onClose={handleClose} style={{padding:'20px'}}>
+                 <Dialog fullWidth={true} maxWidth={'md'}   open={open} onClose={handleClose} style={{padding:'20px'}}>
                      <DialogTitle id="form-dialog-title"> Add Your Bill</DialogTitle>
-                     <DialogContent>                 
-                        <Box
+                     <DialogContent>            
+                           <Box
                             display="flex"
-                            flexWrap="nowrap"
-                            sx={{ maxWidth: 900}}
-                            p={1}
-                            m={1}
-                        >
-                             <Box p={1} >
-                                      <form  noValidate  onSubmit={handleSubmit} autoComplete="off">
+                            >
+                             <Box
+                               mr={2}
+                             >
+                                <form  noValidate  onSubmit={handleSubmit} autoComplete="off">
                                         <FormControl>
                                             <Input type="date" 
                                             style={{  width: '25ch'}} value={myDate} onChange={handleDateChange}/>
@@ -154,6 +189,7 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                                             value={selectCustomer}
                                         />  
                                         <span style={{color:'red'}}>{errorObj.selectCustomer && <span>{errorObj.selectCustomer}</span>}</span>
+                                        
                                         <br/>
                                         <label>Select Products</label>
                                         <Select
@@ -166,13 +202,15 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                                                 className="dropdown"
                                         />  
                                         <br/>
-
                                         <div>
                                             <Button variant="contained" color="primary" onClick={()=>addIitem(selectedValue)}>Add Items </Button>
                                         </div>
-
+                                        <br/>
                                         <hr/>
                                             <DialogActions>
+                                                    <Button onClick={handleReset} variant="contained"  color="secondary">
+                                                        Reset
+                                                    </Button>
                                                     <Button onClick={handleClose} color="primary">
                                                         Cancel
                                                     </Button>
@@ -183,32 +221,32 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                                     </form>
                             </Box>
                             <TableContainer>
-                                <Table>
-                                <TableHead>
-                                        <TableRow>
-                                          <TableCell>Product Name</TableCell>
-                                          <TableCell>Quantity</TableCell>
-                                          <TableCell>Remove</TableCell>        
-                                        </TableRow>
-
-                                </TableHead>
-                                <TableBody>
-                                <TableRow>
-                                    
-                                      {
-                                       lineItems.map((ele,i)=>{
-                                              return <CartItem key={i} products={products} customer={customers} {...ele}/>                  
-                                        })
-                                      }
-
-                                </TableRow>
-                                </TableBody>
-                                </Table>
-
+                                 {
+                                  lineItems.length===0 ?
+                                    <h3 style={{ margin:'20px',color:'red'}}>Cart items are Empty</h3>
+                                :<>
+                                 { selectCustomer && <h4> Name:{selectCustomer.label}</h4>}
+                                
+                                  <Table>
+                                  <TableHead>
+                                          <TableRow>
+                                            <TableCell>Product Name</TableCell>
+                                            <TableCell>SubTotal</TableCell>
+                                            <TableCell>Quantity</TableCell>
+                                            <TableCell>Remove</TableCell>        
+                                          </TableRow>
+                                  </TableHead>
+                                      <TableBody>
+                                              {
+                                                  lineItems.map((ele,i)=>{
+                                                  return <CartItem key={i} removeItem={removeItem} incrementQuantity={incrementQuantity} selectCustomer={selectCustomer} decrementQuantity={decrementQuantity} products={products} customers={customers} {...ele}/>                  
+                                              })
+                                          }
+                                      </TableBody>
+                                  </Table>
+                                 </>
+                                }
                             </TableContainer>
-                              
-                            
-                          
                     </Box>
                      </DialogContent>     
                  </Dialog>

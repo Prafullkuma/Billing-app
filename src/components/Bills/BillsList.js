@@ -2,9 +2,9 @@ import React, { useEffect ,useState} from 'react'
 import BillsListItems from './BillsListItem'
 import {getAllBillsAction} from '../../actions/billsAction'
 import { useDispatch ,useSelector} from 'react-redux'
-import { Table,TableContainer,TableHead,TableRow,TableBody,TableCell} from '@material-ui/core'
+import { Table,TableContainer,Input,Paper,TableHead,TableRow,TableBody,Grid,TableCell} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
-
+import Select from 'react-select'
 
 const useStyles = makeStyles({
     table: {
@@ -13,46 +13,58 @@ const useStyles = makeStyles({
   });
 
 const BillsList=({customers,products})=>{
-    
-    const dispatch=useDispatch()
-    const [data,setData]=useState([])
-    const [selectTerm,setSelectTerm]=useState('')
+        
+        const dispatch=useDispatch()
+        const [data,setData]=useState([])
+        const [selectTerm,setSelectTerm]=useState('')
 
 
-    const [searchTerm,setSearchTerm]=useState('')
+        const [searchTerm,setSearchTerm]=useState('')
 
-    const classes = useStyles();
+        const classes = useStyles();
 
-    useEffect(()=>{
-         dispatch(getAllBillsAction())
-    },[dispatch])
+        useEffect(()=>{
+            dispatch(getAllBillsAction())
+        },[dispatch])
 
-    const bills=useSelector((state)=>{
-        return state.bills
-    })
+        const bills=useSelector((state)=>{
+            return state.bills
+        })
 
-    useEffect(()=>{
-       setData([...bills]) 
-    },[bills])
+        useEffect(()=>{
+        setData([...bills]) 
+        },[bills])
 
-    const handleChange=(e)=>{
-        const result=e.target.value
-        setSelectTerm(result)
-        sortData(result)
-    }
-
-    const sortData=(term)=>{
-        if(term==="asc"){
-            const result=data.sort((a,b)=>a.total-b.total)
-            setData(result)
-        }else{
-            const result=data.sort((a,b)=>b.total-a.total)
-            setData(result)
+        const handleChange=(item)=>{
+            const result=item.value
+            setSelectTerm(result)
+            sortData(result)
         }
-    }
 
+        const sortData=(term)=>{
+            if(term==="asc"){
+                const result=data.sort((a,b)=>a.total-b.total)
+                setData(result)
+            }
+            else if(term==="date"){
+               const result=data.sort((a,b)=>{
+                   return new Date(a.date)-new Date(b.date)
+               }) 
+               setData(result)
+            }
+            else if(term==="dateDsc"){
+                const result=data.sort((a,b)=>{
+                    return new Date(b.date)-new Date(a.date)
+                })
+                setData(result)
+
+            }
+            else{
+                const result=data.sort((a,b)=>b.total-a.total)
+                setData(result)
+            }
+        }
       //Searching 
-
       const handleSearchChange=(e)=>{
             const result=e.target.value
             setSearchTerm(result)
@@ -69,26 +81,57 @@ const BillsList=({customers,products})=>{
         })
         setData(finalResult)
       }
-      
+
+      const options=[
+          { value:"asc", label:"Price ASC"},
+          { value:"desc",label:"Price DSCE"},
+          {value:'date',label:"Sort by Date"},
+          {value:'dateDsc',label:'Sort By Date DESN'}
+      ]
+      const styleSelect={
+          padding:'20px'
+      }
     return(
         <div>
-            <TableContainer style={{margin:'20px'}}>
-                <h1>Bills List-{data.length}</h1>
-                <br/><br/>
+            <TableContainer style={{marginLeft:'70px'}}>
+             
+                <br/>
+                    <Paper style={{textAlign:'center'}}>
+                                    <h1>Total Biils-{data.length}</h1>
+                                    <br/>
+                </Paper>
+                <br/>
+             
                 <label id="orderBy">Order By</label>
+                <Grid container spacing={3}>
+                          
+                          <Grid item xs={6}>
 
-                <select htmlFor="orderBy" style={{margin:'10px'}} value={selectTerm} onChange={handleChange}>
-                  <option value="">Order By</option>  
-                  <option value="asc">Price Asc</option>
-                  <option value="desc"> Price Desc</option>
-                </select>
+                                   <Select
+                                        value={selectTerm}
+                                        placeholder="Select the term"
+                                        onChange={handleChange}
+                                        options={options}
+                                    />
+                          </Grid>
 
-                 <input type="text" value={searchTerm} placeholder="Enter name to search" onChange={handleSearchChange}/><br/>
+                            <Grid item xs={6}>        
+                                    <Input 
+                                            type="text" 
+                                           
+                                             styles={styleSelect}
+                                             value={searchTerm} 
+                                             placeholder="Enter name to search" 
+                                             onChange={handleSearchChange}/><br/>                            </Grid>
+
+                             </Grid>
+               
+                    <br/><br/>
 
                    <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Sr No</TableCell>
+                                <TableCell>Sr.No</TableCell>
                                 <TableCell>Customer Name</TableCell>
                                 <TableCell>Total</TableCell>
                                 <TableCell>Bill created Date</TableCell>
