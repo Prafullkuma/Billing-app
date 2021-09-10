@@ -9,11 +9,11 @@ import { Provider } from 'react-redux'
 
 const store=configureStore()
 
-console.log("before update",store.getState())
+// console.log("before update",store.getState())
 
-store.subscribe(()=>{
-    console.log("after update",store.getState())
-})
+// store.subscribe(()=>{
+//     console.log("after update",store.getState())
+// })
 
 ReactDOM.render(
         <BrowserRouter>
