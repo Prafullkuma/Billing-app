@@ -1,6 +1,8 @@
 import React  from 'react'
 
 import ContentOfTable from './TabsTwo/ContentOfTable'
+import TransactionDetails from './Details/TransactionDetails'
+
 import { Typography } from '@material-ui/core';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -24,7 +26,11 @@ const TabsComponent=({allCustomers,allBills,allProducts})=>{
                                 <Tab><h3 style={{color:'dodgerblue'}}>Graph</h3></Tab>
                         </TabList>
                         <TabPanel>
-                            <h2>Transaction  Details</h2>
+                            <TransactionDetails 
+                                allCustomers={allCustomers}
+                                allBills={allBills}
+                                allProducts={allProducts}    
+                            />
                         </TabPanel>
                         <TabPanel>
                                 <ContentOfTable allCustomers={allCustomers} allBills={allBills} allProducts={allProducts} />

@@ -4,8 +4,14 @@ import {useSelector} from 'react-redux'
 import moment from 'moment'
 import ReactTOPdf from "react-to-pdf";
 
-
-import {Box,TableBody,Button,TableHead,TableRow,Typography,Table,TableCell } from '@material-ui/core'
+import {Box,
+        TableBody,
+        Button,
+        TableHead,
+        TableRow,
+        Typography,
+        Table,
+        TableCell } from '@material-ui/core'
 
 const ViewProductDetails=({_id,customers,products})=>{
       
