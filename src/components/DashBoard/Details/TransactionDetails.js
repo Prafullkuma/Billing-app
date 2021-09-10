@@ -1,6 +1,7 @@
 import React from 'react'
 import DailyTransaction from './DailyTransaction'
 import WeekTransaction from './Week/WeekTransaction'
+import TopFive from './TopFiveCustomer/TopFive'
 
 const TransactionDetails=({allCustomers,allBills,allProducts})=>{
     
@@ -10,9 +11,13 @@ const TransactionDetails=({allCustomers,allBills,allProducts})=>{
             <hr/>
             <hr/>
             <DailyTransaction allCustomers={allCustomers} allBills={allBills}/>
-            <hr/>
-            <hr/>
+            <hr/><hr/>
             <WeekTransaction allBills={allBills} allCustomers={allCustomers}/>
+            <hr/><hr/>
+            <TopFive allCustomers={allCustomers} 
+                     allBills={allBills} 
+                     allProducts={allProducts}
+                     />
         </div>
     )
 }

@@ -2,6 +2,7 @@ import React  from 'react'
 
 import ContentOfTable from './TabsTwo/ContentOfTable'
 import TransactionDetails from './Details/TransactionDetails'
+import Graph from './Graph/Graph'
 
 import { Typography } from '@material-ui/core';
 
@@ -37,7 +38,7 @@ const TabsComponent=({allCustomers,allBills,allProducts})=>{
                         </TabPanel>
 
                         <TabPanel>
-                            <h2>Graph</h2>
+                            <Graph/>
                         </TabPanel>
                     </Tabs>
 

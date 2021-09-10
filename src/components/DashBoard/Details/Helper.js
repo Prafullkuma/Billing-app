@@ -20,3 +20,8 @@ export const GetWeek=(startDate,endDate,arr)=>{
     })
     return result
 }
+export const topFiveCustomers=(arr)=>{
+    return arr.sort((a,b)=>{
+        return b.price-a.price
+    })
+}

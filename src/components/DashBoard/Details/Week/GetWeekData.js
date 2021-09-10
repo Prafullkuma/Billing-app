@@ -18,7 +18,7 @@ const GetWeekData=({weekInfo,allBills,allCustomers})=>{
         <TableContainer>
 
           {data.length===0?
-              <h1> No Transaction for Week</h1>
+              <h1> Select date to see week Transaction</h1>
             :
             <> 
              <h1>Today Transaction-{data.length}</h1>
