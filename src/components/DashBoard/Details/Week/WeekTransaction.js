@@ -14,6 +14,7 @@ const WeekTransaction=({allBills,allCustomers})=>{
 
         setWeekInfo([proposedDate,proposedDate2])
     }
+    
     return(
         <div>   
             <h1 style={{margin:'20px'}}> Week Transaction</h1>  

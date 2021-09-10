@@ -1,10 +1,11 @@
 import React from 'react'
+import DailyChart from './DailyChart'
 
+const Graph=({allBills})=>{
 
-const Graph=()=>{
     return(
         <div>
-         <h1>Graph can be hwew</h1>
+            <DailyChart allBills={allBills}/>
         </div>
     )
 }

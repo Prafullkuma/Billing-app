@@ -38,7 +38,7 @@ const TabsComponent=({allCustomers,allBills,allProducts})=>{
                         </TabPanel>
 
                         <TabPanel>
-                            <Graph/>
+                            <Graph allBills={allBills}/>
                         </TabPanel>
                     </Tabs>
 

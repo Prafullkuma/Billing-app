@@ -1,5 +1,4 @@
 import React from 'react'
-import BillImage from '../../../Assets/Billing.jpg' 
 
 const ImageComponent=()=>{
     const style={
@@ -9,7 +8,7 @@ const ImageComponent=()=>{
     }
     return(
         <div>
-            <img src={BillImage} style={style} alt=" not found"/>
+            <img src={`https://image.freepik.com/free-vector/modern-receipt-flat-style_23-2147908070.jpg`} style={style} alt=" not found"/>
         </div>
     )
 }

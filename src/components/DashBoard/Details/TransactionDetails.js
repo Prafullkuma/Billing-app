@@ -2,12 +2,14 @@ import React from 'react'
 import DailyTransaction from './DailyTransaction'
 import WeekTransaction from './Week/WeekTransaction'
 import TopFive from './TopFiveCustomer/TopFive'
-
+import  { Typography } from '@material-ui/core'
 const TransactionDetails=({allCustomers,allBills,allProducts})=>{
     
     return(
-        <div>
-            <h1>TransactionDetails Page</h1>
+        <div><br/>
+            <Typography variant="h4" component="h4">
+                TransactionDetails Page
+            </Typography>
             <hr/>
             <hr/>
             <DailyTransaction allCustomers={allCustomers} allBills={allBills}/>
