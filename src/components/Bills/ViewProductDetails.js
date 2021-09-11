@@ -23,7 +23,7 @@ const ViewProductDetails=({_id,customers,products})=>{
     })
      useEffect(()=>{
         if(_id){
-            axios.get(`http://dct-billing-app.herokuapp.com/api/bills/${_id}`,{
+            axios.get(`https://dct-billing-app.herokuapp.com/api/bills/${_id}`,{
                 headers:{
                     'Authorization':localStorage.getItem('token')
                 }
