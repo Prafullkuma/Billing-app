@@ -141,7 +141,6 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                     lineItems:lineItems,
                     user:user !== undefined && user._id
                 }
-                // console.log("Got result",formData)
                formSubmission(formData)
             }else{
                 setErrorObj(errors)

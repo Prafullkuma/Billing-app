@@ -43,6 +43,7 @@ const CustomersListItem=({_id ,srNo,name:Ename,mobile:Emobile,email:Eemail,creat
     const [errorObj,setErrorObj]=useState({})
     
     let errors={}
+
     const classes = useStyles();
 
     const dispatch=useDispatch()
@@ -50,6 +51,18 @@ const CustomersListItem=({_id ,srNo,name:Ename,mobile:Emobile,email:Eemail,creat
     const customers=useSelector((state)=>{
         return state.customers
     }) 
+
+
+    //For open and close of handle
+
+    const handleOpen=()=>{
+        setOpen(true);
+     }      
+
+     const handleClose = () => {
+         setErrorObj({})
+        setOpen(false);
+     };
 
     const handleView=(_id)=>{
         if(_id){
@@ -71,13 +84,6 @@ const CustomersListItem=({_id ,srNo,name:Ename,mobile:Emobile,email:Eemail,creat
             }
        }    
 
-     const handleOpen=()=>{
-        setOpen(true);
-     }      
-     const handleClose = () => {
-         setErrorObj({})
-        setOpen(false);
-     };
       const handleChange=(e)=>{
         const attr=e.target.name
         if(attr==="name"){
@@ -89,6 +95,7 @@ const CustomersListItem=({_id ,srNo,name:Ename,mobile:Emobile,email:Eemail,creat
             setEmail(e.target.value)
         }
       }
+     
       const runValidator=()=>{
 
         if(name.length===0){
@@ -109,6 +116,8 @@ const CustomersListItem=({_id ,srNo,name:Ename,mobile:Emobile,email:Eemail,creat
             errors.email="Email is not valid"
         }
     }
+        //form submission
+
       const handleSubmit=(e)=>{
         e.preventDefault()
         runValidator()
@@ -123,10 +132,10 @@ const CustomersListItem=({_id ,srNo,name:Ename,mobile:Emobile,email:Eemail,creat
           dispatch(editCustomerAction(formData,_id))
         
         }else{
-            console.log("error Object",errors)
             setErrorObj(errors)
         }
     }
+
     return(
         <>
              <TableRow >

@@ -72,7 +72,7 @@ export const editProductAction=(formData,_id)=>{
          })  
          .then((res)=>{
               const result=res.data
-              console.log(result)
+
              if(result){
                  dispatch({type:EDIT_PRODUCT,payload:{result:result,_id:_id}})
              }

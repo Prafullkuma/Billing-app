@@ -20,7 +20,7 @@ const customersReducers=(state=initialStateValue,action)=>{
          case EDIT_CUSTOMER:{
              return state.map((ele)=>{
                  if(ele._id===action.payload._id){
-                     return {...ele,...action.payload.formData}
+                     return {...ele,...action.payload}
                  }else{
                      return {...ele}
                  }

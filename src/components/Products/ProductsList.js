@@ -6,6 +6,7 @@ import { getAllProducts } from '../../actions/productsAction'
 import ProductsListItems from './ProductsListItem'
 import Select from 'react-select'
 
+import {sortByName,sortByDescName,sortByPrice,sortByPriceDenc,SearchFunction} from './Helper'
 
 const useStyles = makeStyles({
     table: {
@@ -39,65 +40,31 @@ const ProductsList=()=>{
       const handleChange=(e)=>{
           const inputValue=e.target.value
           setSearch(inputValue)
-          const result=products.filter((ele)=>{
-              return ele.name.toLowerCase().includes(inputValue.toLowerCase())
-          })
+          
+          const result=SearchFunction(products,inputValue)
           setData(result)
       }
 
       //sorting
 
-      const sortByName=(data,param)=>{
-        const result=data.sort((a,b)=>{
-            const obj1=a["name"].toLowerCase()
-            const obj2=b["name"].toLowerCase()
-            if(param==="asc"){
-              if(obj1 < obj2) {return -1 }
-              if (obj1 > obj2) { return 1 }
-            }
-            return 0
-        })
-        setData(result)
-      }
-      const sortByDescName=(data,param)=>{
-        const result=data.sort((a,b)=>{
-            const obj1=a["name"].toLowerCase()
-            const obj2=b["name"].toLowerCase()
-            if(param==="dscn"){
-              if(obj1 > obj2) {return -1 }
-              if (obj1 < obj2) { return 1 }
-            }
-            return 0
-        })
-        setData(result)
-      }
-      const sortByPrice=(data,param)=>{
-          const result=data.sort((a,b)=>{
-              return param==="priceasc" && a.price-b.price     
-          }) 
-          setData(result)
-      }
-      const sortByPriceDenc=(data,param)=>{
-        const result=data.sort((a,b)=>{
-            return param==="pricedscn" && b.price-a.price
-        })
-        setData(result)
-     }
-
       const handleSelectChange=(item)=>{
             const res=item.value
-            setOrder(res)             
+            setOrder(item)             
             if(res==="asc"){
-              sortByName(data,res)
+              const result= sortByName(data,res)
+              setData(result)
             }
             else if(res==="dscn"){
-              sortByDescName(data,res)
+             const result= sortByDescName(data,res)
+              setData(result)
             }
             else if(res==="priceasc"){
-              sortByPrice(data,res)
+             const result= sortByPrice(data,res)
+             setData(result)
             }
             else if(res==="pricedscn"){
-             sortByPriceDenc(data,res)
+              const result=sortByPriceDenc(data,res)
+              setData(result)
             }
       }
 
@@ -138,8 +105,11 @@ const ProductsList=()=>{
 
                   { 
                     products.length===0 ?
-                    <>
-                        <h1>Not purchased a product. Add First Product</h1>
+                     <>
+                       <div style={{textAlign:'center'}}>
+                           <img src="https://icons8.com/preloaders/preloaders/1474/Walk.gif" alt="loaded"/>
+                       <h1>Either you Don't have products or data not found</h1>
+                     </div>
                     </>
                     :
                     <div style={{margin:'30px'}}>

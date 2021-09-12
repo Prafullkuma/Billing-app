@@ -6,6 +6,7 @@ import {TextField ,TablePagination,TableContainer,Paper,Table,TableRow,TableBody
 import CustomersListItem from './CustomersListItem' 
 import {allCustomerListAction} from '../../actions/customersAction'
 import Select from 'react-select'
+import { SearchFunction ,sortByAscName,sortByDescName}  from './Helper'
 
 const useStyles = makeStyles({
     table: {
@@ -32,44 +33,25 @@ const CustomersList=()=>{
     const customers=useSelector((state)=>{
         return state.customers
     })
+    
      useEffect(()=>{
          setData([...customers])
      },[customers])
-    //Sorting ASC or DESC
-    const sortByAscName=(data,param)=>{
-        const result=data.sort((a,b)=>{
-            const obj1=a["name"].toLowerCase()
-            const obj2=b["name"].toLowerCase()
-            if(param==="asc"){
-                if (obj1 < obj2) {return -1 }
-                if (obj1 > obj2) { return 1 }
-              }
-              return 0
-         })
-         setData(result)
-    } 
+    
 
-    const sortByDescName=(data,param)=>{
-        const result=data.sort((a,b)=>{
-            const obj1=a["name"].toLowerCase()
-            const obj2=b["name"].toLowerCase()
-            if(param==="dscn"){
-                if(obj1 > obj2) { return -1 }
-                if (obj1 < obj2) { return 1 }  
-              }
-              return 0  
-         })
-         setData(result)
-    }
+     //sorting
 
     const handleSelectChange=(item)=>{
         const res=item.value
-        setOrder(res)
-         if(res==="asc"){
-            sortByAscName(data,res)
+        setOrder(item)
+        
+        if(res==="asc"){
+            const result= sortByAscName(data,res)
+            setData(result)
          }
          else if(res==="dscn"){
-            sortByDescName(data,res)
+            const result =sortByDescName(data,res)
+            setData(result)
          }
     }
 
@@ -79,9 +61,7 @@ const CustomersList=()=>{
         const res=e.target.value
         setSearch(res)
 
-        const result= customers.filter((ele)=>{
-            return ele.name.toLowerCase().includes(res.toLowerCase())
-        })
+        const result= SearchFunction(res,customers)
         setData(result)
     }   
 
@@ -107,28 +87,33 @@ const CustomersList=()=>{
                    <h1>Total Customer-{data.length}</h1>
                     <br/>
                 </Paper>
-            <label id="order">Order By</label>
-            <Grid container spacing={3}>
-                <Grid item xs={6}  >
-                    <Select
-                        options={options}
-                        value={order}
-                        onChange={handleSelectChange}
-                    />
-                </Grid>  
-                  <Grid item xs={6}>
-                    <TextField  placeholder="Enter Term to search" type="text" value={search} onChange={handleSeachChange} />
-                  </Grid>   
-            </Grid>
-            <br/>
-            {
+                <label id="order">Order By</label>
+                <Grid container spacing={3}>
+                    <Grid item xs={6}  >
+                        <Select
+                            options={options}
+                            value={order}
+                            onChange={handleSelectChange}
+                        />
+                    </Grid>  
+                    <Grid item xs={6}>
+                        <TextField  placeholder="Enter Term to search" type="text" value={search} onChange={handleSeachChange} />
+                    </Grid>   
+                </Grid>
+                <br/>
+             {
                 customers.length===0 ?
                 <>
-                 <h1>No Customer Found</h1>
+                 <div style={{textAlign:'center'}}>
+
+                         <img src="https://icons8.com/preloaders/preloaders/1474/Walk.gif" alt="loaded"/>
+                         <h1>Data not found</h1>
+                 </div>
+                  
                 </>
                 :
                 <>
-                         <TableContainer component={Box} item="true" xs={9}>
+                  <TableContainer component={Box} item="true" xs={9}>
 
                         <Table className={classes.table}>
                         <TableHead>
@@ -151,6 +136,7 @@ const CustomersList=()=>{
                                         })
                             }
                         </TableBody>
+
                         </Table>
                             <TablePagination
                                 rowsPerPageOptions={[5, 10, 25]}
@@ -161,7 +147,7 @@ const CustomersList=()=>{
                                 onPageChange={handleChangePage}
                                 onRowsPerPageChange={handleChangeRowsPerPage}
                            />
-                </TableContainer>
+                  </TableContainer>
                 </>
 
           } 

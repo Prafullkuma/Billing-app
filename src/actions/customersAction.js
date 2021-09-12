@@ -69,8 +69,7 @@ export const editCustomerAction=(formData,_id)=>{
         })    
         .then((res)=>{
             const result=res.data
-            console.log(result)
-            dispatch({type:EDIT_CUSTOMER,payload:{ formData:formData, _id:_id}})
+            dispatch({type:EDIT_CUSTOMER,payload:result})
          
         })
         .catch((err)=>{

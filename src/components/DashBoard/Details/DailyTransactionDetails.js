@@ -17,8 +17,13 @@ const DailyTransactionDetails=({todayTransaction,allCustomers})=>{
            <TableContainer>
 
              {todayTransaction.length===0?
-                 <h1 style={{color:'red'}}> No Transaction for today</h1>
+                  <div style={{textAlign:'center'}}>
+
+                            <img src="https://icons8.com/preloaders/preloaders/1474/Walk.gif" alt="loaded"/>
+                            <h1>No transaction for today</h1>
+                    </div>
                :
+               
                <> 
                 <h1>Today Transaction-{todayTransaction.length}</h1>
                     <br/>

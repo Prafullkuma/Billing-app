@@ -22,7 +22,6 @@ export const registerAction=(formData,successMessage,setSavedDetails,moveLink)=>
                 }             
            })
            .catch((err)=>{
-               console.log(err)
                alert(err.message)
            })
     }

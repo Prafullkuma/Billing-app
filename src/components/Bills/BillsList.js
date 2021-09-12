@@ -37,7 +37,7 @@ const BillsList=({customers,products})=>{
 
         const handleChange=(item)=>{
             const result=item.value
-            setSelectTerm(result)
+            setSelectTerm(item)
             sortData(result)
         }
 
@@ -66,10 +66,12 @@ const BillsList=({customers,products})=>{
         }
       //Searching 
       const handleSearchChange=(e)=>{
+
             const result=e.target.value
             setSearchTerm(result)
             filterData(result)     
       }
+
       const filterData=(query)=>{
           let finalResult=[]  
         const result=customers.filter((ele)=>{
@@ -99,7 +101,7 @@ const BillsList=({customers,products})=>{
                     <Paper style={{textAlign:'center'}}>
                                     <h1>Total Biils-{data.length}</h1>
                                     <br/>
-                </Paper>
+                   </Paper>
                 <br/>
              
                 <label id="orderBy">Order By</label>
@@ -127,31 +129,41 @@ const BillsList=({customers,products})=>{
                              </Grid>
                
                     <br/><br/>
-
-                   <Table className={classes.table}>
+                    {
+                    data.length===0
+                     ?
+                    <>
+                            <div style={{textAlign:'center'}}>
+                                <img src="https://icons8.com/preloaders/preloaders/1474/Walk.gif" alt="loaded"/>
+                                <h1>Data not found</h1>
+                            </div>
+                    </>
+                     :
+                     <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Sr.No</TableCell>
-                                <TableCell>Customer Name</TableCell>
-                                <TableCell>Total</TableCell>
-                                <TableCell>Bill created Date</TableCell>
-                                <TableCell>View Product Details</TableCell>
-                                <TableCell>Delete</TableCell>
-                            </TableRow>
-                        </TableHead>
+                                        <TableCell>Sr.No</TableCell>
+                                        <TableCell>Customer Name</TableCell>
+                                        <TableCell>Total</TableCell>
+                                        <TableCell>Bill created Date</TableCell>
+                                        <TableCell>View Product Details</TableCell>
+                                        <TableCell>Delete</TableCell>
+                                    </TableRow>
+                                </TableHead>
 
-                        <TableBody>
-                                {
-                                    data
-                                    .map((ele,i)=>{
-                                            return <BillsListItems key={i} {...ele} srNo={i+1} customers={customers} products={products}/>
-                                    })     
-                                }   
-                              
-                        </TableBody>
-                </Table>  
-              
+                                <TableBody>
+                                        {  data.length !==0 &&
 
+                                            data
+                                            .map((ele,i)=>{
+                                                    return <BillsListItems key={i} {...ele} srNo={i+1} customers={customers} products={products}/>
+                                            })     
+                                        }   
+                                    
+                                </TableBody>
+                        </Table>                      
+                     }
+                   
 
           </TableContainer> 
           

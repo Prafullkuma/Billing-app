@@ -8,7 +8,7 @@ const TransactionDetails=({allCustomers,allBills,allProducts})=>{
     return(
         <div><br/>
             <Typography variant="h4" component="h4">
-                TransactionDetails Page
+                Transaction Details 
             </Typography>
             <hr/>
             <hr/>

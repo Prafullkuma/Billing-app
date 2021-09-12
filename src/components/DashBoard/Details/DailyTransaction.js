@@ -12,6 +12,7 @@ const DailyTransaction=({allCustomers,allBills})=>{
         })
         setTodayTransaction(result)
       },[proposedDate,allBills]) 
+      
     return(
         <div>
             <DailyTransactionDetails 
