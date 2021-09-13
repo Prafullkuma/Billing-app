@@ -24,12 +24,13 @@ const TopFiveList=({allBills,allCustomers})=>{
                 </TableHead>
                 <TableBody>
                     {data.length !==0 &&
+
                       data
                       .slice(0,5)
                       .map((ele,i)=>{
                           return (
                               <TableRow key={i}>
-                                 <TableCell>{ ele.customer && GetCustomerName(ele.customer,allCustomers).name}</TableCell> 
+                                 <TableCell>{ele.customer && GetCustomerName(ele.customer,allCustomers).name}</TableCell> 
                                 <TableCell>{ele.total}</TableCell>
                               </TableRow>
                           )
