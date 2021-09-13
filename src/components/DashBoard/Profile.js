@@ -2,7 +2,6 @@ import React,{useState} from 'react'
 import {Button,Menu,MenuItem} from '@material-ui/core'
 
 const Profile=({profile})=>{
-
       //Menu
       const [anchorEl, setAnchorEl] =useState(null);
 

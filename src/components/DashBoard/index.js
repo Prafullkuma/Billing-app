@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import {allCustomerListAction} from '../../actions/customersAction'
 import {getAllProducts} from '../../actions/productsAction'
 import {getAllBillsAction} from '../../actions/billsAction'
+import {accoutAction} from '../../actions/userAction'
+
 import {Container} from '@material-ui/core'
 
 
@@ -41,6 +43,7 @@ const DashBoard=()=>{
           dispatch(allCustomerListAction())
           dispatch(getAllProducts())
           dispatch(getAllBillsAction())
+          dispatch(accoutAction())
       },[dispatch])
 
       useEffect(()=>{

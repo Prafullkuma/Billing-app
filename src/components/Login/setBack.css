@@ -8,7 +8,7 @@
 }
 .root::before{
   content: "";
-  background-image: url('../../Assets/login.jpg');
+  background-image: url('https://image.freepik.com/free-vector/sign-concept-illustration_114360-5425.jpg');
   opacity:0.4;
   background-size: cover;
   position:absolute;
