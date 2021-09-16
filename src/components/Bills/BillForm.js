@@ -143,6 +143,7 @@ const BillForm=({customers,products,formSubmission,resetForm,isSaved})=>{
                 }
                formSubmission(formData)
             }else{
+                setOpen(true)
                 setErrorObj(errors)
             }
        } 

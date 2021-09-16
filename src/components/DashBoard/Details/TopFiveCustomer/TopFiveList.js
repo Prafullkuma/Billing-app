@@ -30,7 +30,7 @@ const TopFiveList=({allBills,allCustomers})=>{
                       .map((ele,i)=>{
                           return (
                               <TableRow key={i}>
-                                 <TableCell>{GetCustomerName(ele.customer,allCustomers).name}</TableCell> 
+                                 <TableCell>{ele.customer && GetCustomerName(ele.customer,allCustomers).name}</TableCell> 
                                 <TableCell>{ele.total}</TableCell>
                               </TableRow>
                           )

@@ -37,8 +37,8 @@ const ProdcutsForm=({formSubmission,toggleStatus,isSaved})=>{
         if(name.length===0){
             errors.name="Name can't be blank"
         }
-        else if(price<=0){
-             errors.price="Price is not set"   
+         if(price<=0){
+            errors.price="Price is not set"   
         }
      } 
      const handleSubmit=(e)=>{
@@ -46,7 +46,7 @@ const ProdcutsForm=({formSubmission,toggleStatus,isSaved})=>{
          runValidatior()
 
          if(Object.keys(errors).length===0){
-             setErrorObj({})
+                setErrorObj({})
                 const formData={
                     name:name,
                     price:Number(price)
@@ -54,6 +54,7 @@ const ProdcutsForm=({formSubmission,toggleStatus,isSaved})=>{
                 formSubmission(formData)
          }
          else{
+            setOpen(true)
             setErrorObj(errors)
          }
      }
@@ -64,6 +65,9 @@ const ProdcutsForm=({formSubmission,toggleStatus,isSaved})=>{
 
         const handleClose = () => {
             setOpen(false);
+            setPrice('')
+            setName('')
+            setErrorObj({})
         };
     return(
         <div style={{margin:'30px'}}>
