@@ -49,7 +49,7 @@ and he can view the customer details and and delete to. but the common convensti
   -  user can able to delete the products before creating a bill
   -  can able to create a bill
   -  Validation is implemented 
-+ Bill Deatails
++ Bill Details
   - can able to view customer and total amount
   - he can view the total bill with including sub amount and total amount
   - Download as PDF is implemented
@@ -60,7 +60,7 @@ and he can view the customer details and and delete to. but the common convensti
   - implemented Week Transaction
   - Implemented Top Five customer List
 + Graph 
-  -  implemented graphs with detail report 
+  -  implemented graphs with daily report 
   -  implemented graph with weekly details
 # Contributors
   ### [Prafullkumar](https://github.com/Prafullkuma)
